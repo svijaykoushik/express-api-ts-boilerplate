@@ -1,0 +1,46 @@
+{
+  "name": "express-api-ts-boilerplate",
+  "version": "0.0.1",
+  "description": "'Simple boiler plate for rest-api with express written in typescript'",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/svijaykoushik/express-api-ts-boilerplate.git"
+  },
+  "keywords": [
+    "express.js",
+    "boiler-plate",
+    "typescript",
+    "rest-api"
+  ],
+  "author": "Vijaykoushik, S.",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/svijaykoushik/express-api-ts-boilerplate/issues"
+  },
+  "homepage": "https://github.com/svijaykoushik/express-api-ts-boilerplate#readme",
+  "dependencies": {
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "class-validator": "^0.12.2",
+    "cors": "^2.8.5",
+    "dot-env": "0.0.1",
+    "express": "^4.17.1",
+    "helmet": "^3.22.0",
+    "jsonwebtoken": "^8.5.1",
+    "jwk-to-pem": "^2.0.3",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/express": "^4.17.6",
+    "@types/jsonwebtoken": "^8.5.0",
+    "@types/jwk-to-pem": "^2.0.0",
+    "@types/node": "^14.0.11",
+    "typescript": "^3.9.5"
+  }
+}
