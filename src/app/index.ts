@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import bodyParser from 'body-parser'
 import { AddressInfo } from 'net';
+import { Server } from 'http';
 export class App {
     private app: express.Express;
     constructor() {
@@ -14,7 +15,7 @@ export class App {
         this.app.use(cors());
         this.app.use(bodyParser.json({ limit: '50mb' }));
     }
-    public listen() {
+    public listen(): Server {
         const server = this.app.listen(3000, 'localhost',() => {
             const address = (server.address() as AddressInfo).address;
             const port = (server.address() as AddressInfo).port;
