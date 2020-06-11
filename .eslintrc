@@ -1,12 +1,40 @@
 {
     "root": true,
     "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": [
+            "./tsconfig.json"
+        ]
+    },
     "plugins": [
         "@typescript-eslint"
     ],
     "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended"
-    ]
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    ],
+    "rules": {
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "comma-dangle": [
+            "error",
+            "never"
+        ],
+        "arrow-parens": [
+            "error",
+            "always"
+        ],
+        "@typescript-eslint/array-type": ["error"],
+        "@typescript-eslint/explicit-member-accessibility": ["error"],
+        "@typescript-eslint/member-ordering": ["warn"],
+        "@typescript-eslint/no-inferrable-types": ["warn"]
+    }
 }
