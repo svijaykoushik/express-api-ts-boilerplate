@@ -1,4 +1,4 @@
-import { App } from "./app";
+import { App } from './app';
 
 class Server {
     public static main(): void {

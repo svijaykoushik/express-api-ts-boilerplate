@@ -4,7 +4,7 @@
   "description": "'Simple boiler plate for rest-api with express written in typescript'",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint . --ext .ts --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
