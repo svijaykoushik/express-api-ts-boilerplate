@@ -14,6 +14,7 @@ export class SampleRouter implements ApiRouter {
 
     private initRoutes(): void {
         this.router.get('/sample', this.sampleController.getSample);
+        this.router.get('/sample/error', this.sampleController.getError);
     }
 
     public get Router(): Router {

@@ -1,5 +1,6 @@
 import { SampleService } from '../../services/';
 import { Request, Response } from 'express';
+import { APIError } from '../../error/api-error';
 
 export class SampleController {
     public constructor() { }
@@ -10,5 +11,9 @@ export class SampleController {
         response.status(200).send({
             response: result
         });
+    }
+
+    public getError(request: Request, response: Response): void {
+        throw new APIError(500, 'SAMPLE_ERROR', 'This is a sample error');
     }
 }
