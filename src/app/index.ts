@@ -1,17 +1,20 @@
-import express from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { AddressInfo } from 'net';
 import { Server } from 'http';
 import { routes } from './routes';
+import { ErrorHandlerMiddleware } from './middlewares';
 export class App {
     private app: express.Express;
-
+    private errorHandlerMiddleware: ErrorHandlerMiddleware;
     public constructor() {
         this.app = express();
+        this.errorHandlerMiddleware = new ErrorHandlerMiddleware();
         this.init();
         this.initRoutes();
+        this.initErrorMiddlewares();
     }
 
     public listen(): Server {
@@ -33,5 +36,15 @@ export class App {
         routes.forEach((route) => {
             this.app.use(route.Router);
         });
+        this.app.use((request: Request, response: Response, next: NextFunction) => {
+            this.errorHandlerMiddleware.routeErrorHandler(request, response, next);
+        });
     }
+
+    private initErrorMiddlewares() {
+        this.app.use((error: Error, request: Request, response: Response, next: NextFunction) => {
+            this.errorHandlerMiddleware.unhandledErrorHandler(error, request, response, next);
+        });
+    }
+
 }
