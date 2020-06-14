@@ -4,9 +4,11 @@
 
 ## Getting started
 
-Download the project in to your computer and extract the contents in a known location. To install the dependencies use
+Download the project in to your computer from the [releases](https://github.com/svijaykoushik/express-api-ts-boilerplate/releases) section and extract the contents in a known location. To install the dependencies use
 
 `npm install`
+
+Edit the package.json to fit your project and start working.
 
 ## Packages included
   
