@@ -36,7 +36,8 @@ Edit the package.json to fit your project and start working.
 8. bcrypt.
 
     For hashing passwords. Get more information at <https://github.com/kelektiv/node.bcrypt.js>
-
+9. dotenv
+    For storing environment variables. Get more information at <https://github.com/motdotla/dotenv#readme>
 ## Development tools
 
 1. Mocha
