@@ -1,1 +1,1 @@
-export * from './sample/sample-contoller';
+export * from './app-contoller';
