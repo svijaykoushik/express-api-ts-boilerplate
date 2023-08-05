@@ -1,4 +1,4 @@
-import { SampleService } from '../../services/';
+import { SampleService } from '../../services/sample/sample-service';
 import { Request, Response } from 'express';
 import { APIError } from '../../error/api-error';
 
