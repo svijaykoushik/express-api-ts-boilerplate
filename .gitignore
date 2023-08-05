@@ -106,3 +106,6 @@ dist
 # VSCode
 .vscode/*
 !.vscode/launch.json
+
+# App folders
+build
