@@ -1,5 +1,5 @@
-import { ValidationError } from "class-validator";
-import { ApiException, ExceptionDetails } from "./api-exception";
+import { ValidationError } from 'class-validator';
+import { ApiException, ExceptionDetails } from './api-exception';
 
 export class InvalidRequestException extends ApiException {
     constructor(message: string, errorCode: string, details: any) {
@@ -7,7 +7,7 @@ export class InvalidRequestException extends ApiException {
             400,
             message,
             new ExceptionDetails(errorCode, details)
-        )
+        );
     }
 }
 
@@ -20,6 +20,6 @@ export class InvalidRequestBodyException extends ApiException {
                 'INVALID_REQUEST_BODY',
                 validationErrors
             )
-        )
+        );
     }
 }

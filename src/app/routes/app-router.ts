@@ -5,7 +5,7 @@ import { ApiRouter } from './api-router';
 
 export class AppRouter implements ApiRouter {
     private router: Router;
-    private baseUrl = `/api/v1/app`
+    private baseUrl = '/api/v1/app';
     public constructor(
         private appController: AppController
     ) {

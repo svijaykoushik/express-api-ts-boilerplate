@@ -9,7 +9,7 @@ export class ExceptionDetails {
 
 
 export class ApiException extends Error {
-    httpCode: number = -1;
+    httpCode = -1;
     details: ExceptionDetails;
     innerError: any;
     constructor(httpCode: number, message: string, details?: ExceptionDetails, innerError?: any) {

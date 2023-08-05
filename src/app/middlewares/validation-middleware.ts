@@ -1,9 +1,9 @@
-import { ClassConstructor, instanceToPlain, plainToInstance } from "class-transformer";
-import { validate, ValidationError } from "class-validator";
+import { ClassConstructor, instanceToPlain, plainToInstance } from 'class-transformer';
+import { validate, ValidationError } from 'class-validator';
 import { NextFunction, Request, Response } from 'express';
-import { InvalidRequestBodyException, InvalidRequestException } from "../error/invalid-request-exception";
-import { UnhandledException } from "../error/unhandled-exception";
-import { trimSanitizer } from "../helpers/trimmer";
+import { InvalidRequestBodyException, InvalidRequestException } from '../error/invalid-request-exception';
+import { UnhandledException } from '../error/unhandled-exception';
+import { trimSanitizer } from '../helpers/trimmer';
 
 export function BodyValidationMiddleware(classType: ClassConstructor<unknown>, skipMissingProperties = false) {
     return async (request: Request, response: Response, next: NextFunction) => {
@@ -30,9 +30,9 @@ export function BodyValidationMiddleware(classType: ClassConstructor<unknown>, s
         } catch (e) {
             next(
                 new UnhandledException(e)
-            )
+            );
         }
-    }
+    };
 }
 
 export function QueryValidationMiddleware(classType: ClassConstructor<unknown>, skipMissingProperties = false) {
@@ -53,9 +53,9 @@ export function QueryValidationMiddleware(classType: ClassConstructor<unknown>, 
         } catch (e) {
             next(
                 new UnhandledException(e)
-            )
+            );
         }
-    }
+    };
 }
 
 export function UrlParamsValidationMiddleware(classType: ClassConstructor<unknown>, skipMissingProperties = false) {
@@ -73,7 +73,7 @@ export function UrlParamsValidationMiddleware(classType: ClassConstructor<unknow
         } else {
             next();
         }
-    }
+    };
 }
 
 async function validateRequest(classType: ClassConstructor<unknown>, plain: any, skipMissingProperties: boolean) {

@@ -1,4 +1,4 @@
-import { ApiException, ExceptionDetails } from "./api-exception";
+import { ApiException, ExceptionDetails } from './api-exception';
 
 
 export class DomainRestrictedException extends ApiException {
@@ -18,4 +18,4 @@ export class DomainRestrictedException extends ApiException {
 
 module.exports = {
     DomainRestrictedException
-}
+};

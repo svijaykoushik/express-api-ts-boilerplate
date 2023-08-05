@@ -6,9 +6,9 @@ export const apiDefintion: SwaggerDefinition = {
         title: 'API DOCUMENTATION',
         version: '1.0.0',
         description: 'CANAM API',
-        termsOfService: '',
+        termsOfService: ''
     },
-    host: `localhost:3000`,
+    host: 'localhost:3000',
     basePath: '/',
     schemes: ['http', 'https'],
     components: {

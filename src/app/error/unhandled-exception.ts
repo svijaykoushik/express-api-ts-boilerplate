@@ -1,4 +1,4 @@
-import { ExceptionDetails, ApiException } from "./api-exception";
+import { ExceptionDetails, ApiException } from './api-exception';
 
 
 export class UnhandledException extends ApiException {

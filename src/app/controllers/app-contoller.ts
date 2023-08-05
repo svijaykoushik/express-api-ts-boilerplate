@@ -16,16 +16,16 @@ export class AppController {
                     {
                         data: result
                     },
-                    "sample response"
+                    'sample response'
                 )
             );
         } catch (e) {
             if (e instanceof ApiException) {
-                next(e)
+                next(e);
             } else {
                 next(
                     new UnhandledException(e)
-                )
+                );
             }
         }
     }

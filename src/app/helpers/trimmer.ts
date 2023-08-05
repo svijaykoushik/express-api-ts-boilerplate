@@ -17,7 +17,7 @@
          trimDataStore.addDataToTrim({
              target,
              propertyName,
-             each: isArray,
+             each: isArray
          });
      };
  }
@@ -87,16 +87,16 @@
      public sanitize(classInstance: Object) {
          const trimData = this.trimDataStore.getDataToTrim(classInstance);
          trimData
-             .filter(datum => {
+             .filter((datum) => {
                  return (
                      classInstance[datum.propertyName] !== null &&
                      classInstance[datum.propertyName] !== undefined
                  );
              })
-             .forEach(datum => {
+             .forEach((datum) => {
                  if (datum.each) {
                      if (Array.isArray(classInstance[datum.propertyName])) {
-                         (classInstance[datum.propertyName] as Array<any>).forEach(
+                         (classInstance[datum.propertyName] as any[]).forEach(
                              (item, index, array) => {
                                  if (
                                      item !== null &&
