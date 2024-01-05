@@ -12,13 +12,39 @@ export class SampleRouter implements ApiRouter {
         this.initRoutes();
     }
 
-    private initRoutes(): void {
-        this.router.get('/sample', this.sampleController.getSample);
-        this.router.get('/sample/error', this.sampleController.getError);
-    }
-
     public get Router(): Router {
         return this.router;
+    }
+
+    private initRoutes(): void {
+
+        /**
+         * @openapi
+         * /sample:
+         *   get:
+         *     summary: The sample endpoint
+         *     description: The sample endpoint
+         *     tags:
+         *       - Sample
+         *     responses:
+         *       200:
+         *         description: Application works
+         */
+        this.router.get('/sample', this.sampleController.getSample);
+
+        /**
+         * @openapi
+         * /sample/error:
+         *   get:
+         *     summary: The sample endpoint for error response
+         *     description: The sample endpoint that gives error response
+         *     tags:
+         *       - Sample
+         *     responses:
+         *       500:
+         *         description: Internal server error
+         */
+        this.router.get('/sample/error', this.sampleController.getError);
     }
 
 }

@@ -21,12 +21,20 @@ export class App {
     }
 
     public listen(): Server {
-        const server = this.app.listen(3000, 'localhost', () => {
-            const address = (server.address() as AddressInfo).address;
-            const port = (server.address() as AddressInfo).port;
-            console.log(`Application running on url 📡: http://${address}:${port}/`);
-            console.log(`Api documentation running on url 📡: http://${address}:${port}/api-docs/`);
-        });
+        const server = this.app.listen(
+            parseInt(process.env.APP_PORT) || 3000,
+            process.env.APP_URL || 'localhost',
+            () => {
+                const address = (server.address() as AddressInfo).address;
+                const port = (server.address() as AddressInfo).port;
+                console.log(
+                    `Application running on url 📡: http://${address}:${port}/`
+                );
+                console.log(
+                    `Api documentation running on url 📡: http://${address}:${port}/api-docs/`
+                );
+            }
+        );
         return server;
     }
 
@@ -50,13 +58,10 @@ export class App {
         //     })
         // );
         this.app.use(express.json({ limit: '50mb' }));
-        this.app.get('/',(request,response)=>{
-            response.status(200).send({
-                message: 'Welcome'
-            });
-        });
+
         const apiDocsPath = join(__dirname, '../api-docs');
-        this.app.get('/api-docs', express.static(apiDocsPath));
+        console.log('apiDocsPath: %s', apiDocsPath);
+        this.app.use('/api-docs', express.static(apiDocsPath));
         this.app.get('/swagger.json', (request, response, next) => {
             try {
                 response.setHeader('Content-Type', 'application/json');
