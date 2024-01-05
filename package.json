@@ -4,13 +4,13 @@
   "description": "'Simple boiler plate for rest-api with express written in typescript'",
   "main": "index.js",
   "scripts": {
-    "lint": "eslint . --ext .ts --fix",
+    "pretty": "prettier -w src",
     "test": "mocha -r ts-node/register src/**/**/*.spec.ts",
     "dev": "nodemon",
     "start": "node ./build/index.js",
     "prebuild": "rm -rf ./build",
     "build": "tsc --build",
-    "postbuild":"cp -r src/api-docs build/api-docs",
+    "postbuild": "cp -r src/api-docs build/api-docs",
     "migration:start": "node ./build/app/scripts/migrate.js",
     "migration:revert": "node ./build/app/scripts/revert-migration.js",
     "migration:revertAll": "node ./build/app/scripts/revert-all-migrations.js"
@@ -43,6 +43,7 @@
     "jsonwebtoken": "^9.0.1",
     "jwk-to-pem": "^2.0.5",
     "mysql": "^2.18.1",
+    "prettier": "^3.1.1",
     "reflect-metadata": "^0.1.13",
     "swagger-jsdoc": "^6.2.8",
     "typeorm": "^0.3.17"
