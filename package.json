@@ -1,8 +1,8 @@
 {
   "name": "express-api-ts-boilerplate",
-  "version": "0.0.1",
-  "description": "'Simple boiler plate for rest-api with express written in typescript'",
-  "main": "index.js",
+  "version": "0.0.7",
+  "description": "Simple boiler plate for rest-api with express written in typescript",
+  "main": "build/index.js",
   "scripts": {
     "pretty": "prettier -w src",
     "test": "mocha -r ts-node/register src/**/**/*.spec.ts",
@@ -26,7 +26,7 @@
     "rest-api"
   ],
   "author": "Vijaykoushik, S.",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/svijaykoushik/express-api-ts-boilerplate/issues"
   },
