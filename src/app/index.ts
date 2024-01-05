@@ -4,12 +4,15 @@ import helmet from 'helmet';
 import { AddressInfo } from 'net';
 import { Server } from 'http';
 import { routes } from './routes';
-import { routeErrorHandler, unhandledErrorHandler, apiErrorHandler } from './middlewares';
+import {
+    routeErrorHandler,
+    unhandledErrorHandler,
+    apiErrorHandler
+} from './middlewares';
 import { join } from 'path';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { apiDefintion } from './config/swagger-config';
 // import { DomainRestrictedException } from './error/domain-restricted-exception';
-
 
 export class App {
     private app: express.Express;
@@ -89,5 +92,4 @@ export class App {
         this.app.use(apiErrorHandler);
         this.app.use(unhandledErrorHandler);
     }
-
 }

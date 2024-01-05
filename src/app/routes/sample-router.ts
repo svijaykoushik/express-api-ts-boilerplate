@@ -5,9 +5,7 @@ import { ApiRouter } from './api-router';
 
 export class SampleRouter implements ApiRouter {
     private router: Router;
-    public constructor(
-        private sampleController: SampleController
-    ) {
+    public constructor(private sampleController: SampleController) {
         this.router = Router();
         this.initRoutes();
     }
@@ -17,7 +15,6 @@ export class SampleRouter implements ApiRouter {
     }
 
     private initRoutes(): void {
-
         /**
          * @openapi
          * /sample:
@@ -46,5 +43,4 @@ export class SampleRouter implements ApiRouter {
          */
         this.router.get('/sample/error', this.sampleController.getError);
     }
-
 }

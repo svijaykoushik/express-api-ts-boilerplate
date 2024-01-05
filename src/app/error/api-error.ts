@@ -4,7 +4,12 @@ export class APIError extends Error {
     private errorMessage: string;
     private innerError?: Error | APIError;
 
-    public constructor(statusCode: number, code: string, message: string, innerError?: Error | APIError) {
+    public constructor(
+        statusCode: number,
+        code: string,
+        message: string,
+        innerError?: Error | APIError
+    ) {
         super(message);
         this.statusCode = statusCode;
         this.errorCode = code;

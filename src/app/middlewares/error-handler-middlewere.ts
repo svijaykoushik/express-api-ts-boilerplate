@@ -1,7 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
 
-
-export function unhandledErrorHandler(error: Error, request: Request, response: Response, next: NextFunction): void {
+export function unhandledErrorHandler(
+    error: Error,
+    request: Request,
+    response: Response,
+    next: NextFunction
+): void {
     console.error({
         name: error.name,
         message: error.message,
@@ -12,7 +16,11 @@ export function unhandledErrorHandler(error: Error, request: Request, response: 
     });
 }
 
-export function routeErrorHandler(request: Request, response: Response, next: NextFunction): void {
+export function routeErrorHandler(
+    request: Request,
+    response: Response,
+    next: NextFunction
+): void {
     if (!request.route) {
         response.status(404).send({
             error: `Cannot ${request.method} ${request.path}`

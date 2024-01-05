@@ -5,10 +5,14 @@ import { ApiException } from '../error/api-exception';
 import { UnhandledException } from '../error/unhandled-exception';
 
 export class AppController {
-    public constructor(private appService: AppService) { }
+    public constructor(private appService: AppService) {}
 
-    public async sample(request: Request, response: Response, next: NextFunction): Promise<void> {
-        try{
+    public async sample(
+        request: Request,
+        response: Response,
+        next: NextFunction
+    ): Promise<void> {
+        try {
             const result = await this.appService.sample();
             response.status(200).send(
                 new ApiResponse(
@@ -23,9 +27,7 @@ export class AppController {
             if (e instanceof ApiException) {
                 next(e);
             } else {
-                next(
-                    new UnhandledException(e)
-                );
+                next(new UnhandledException(e));
             }
         }
     }

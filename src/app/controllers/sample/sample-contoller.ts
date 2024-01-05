@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { APIError } from '../../error/api-error';
 
 export class SampleController {
-    public constructor() { }
+    public constructor() {}
 
     public getSample(request: Request, response: Response): void {
         const sampleService = new SampleService();

@@ -10,7 +10,10 @@ describe('Sample service', () => {
                 assert.isString(sampleService.getSampleResponse());
             });
             it('should return "Hello there!"', () => {
-                assert.strictEqual(sampleService.getSampleResponse(), 'Hello there!');
+                assert.strictEqual(
+                    sampleService.getSampleResponse(),
+                    'Hello there!'
+                );
             });
         });
     });

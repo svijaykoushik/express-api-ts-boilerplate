@@ -3,11 +3,7 @@ import { ApiException, ExceptionDetails } from './api-exception';
 
 export class InvalidRequestException extends ApiException {
     constructor(message: string, errorCode: string, details: any) {
-        super(
-            400,
-            message,
-            new ExceptionDetails(errorCode, details)
-        );
+        super(400, message, new ExceptionDetails(errorCode, details));
     }
 }
 
@@ -16,10 +12,7 @@ export class InvalidRequestBodyException extends ApiException {
         super(
             400,
             'Required parameters in request body are either missing or invalid',
-            new ExceptionDetails(
-                'INVALID_REQUEST_BODY',
-                validationErrors
-            )
+            new ExceptionDetails('INVALID_REQUEST_BODY', validationErrors)
         );
     }
 }

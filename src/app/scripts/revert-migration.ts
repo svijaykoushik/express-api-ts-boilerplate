@@ -27,10 +27,11 @@ async function run() {
     await migrationExecutor.undoLastMigration();
 }
 
-run().then(() => {
-    console.log('🏁 Reverted last migration');
-    exit(0);
-})
+run()
+    .then(() => {
+        console.log('🏁 Reverted last migration');
+        exit(0);
+    })
     .catch((err) => {
         console.error(err);
         console.error('❌ Failed to revert last migration');
