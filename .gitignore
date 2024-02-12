@@ -109,3 +109,6 @@ dist
 
 # App folders
 build
+
+# App files
+*.db

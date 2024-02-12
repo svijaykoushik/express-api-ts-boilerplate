@@ -63,7 +63,6 @@ export class App {
         this.app.use(express.json({ limit: '50mb' }));
 
         const apiDocsPath = join(__dirname, '../api-docs');
-        console.log('apiDocsPath: %s', apiDocsPath);
         this.app.use('/api-docs', express.static(apiDocsPath));
         this.app.get('/swagger.json', (request, response, next) => {
             try {
