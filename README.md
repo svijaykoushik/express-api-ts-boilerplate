@@ -1,54 +1,82 @@
 # express-api-ts-boilerplate
 
- A Simple boiler plate for developing RESTful api with express.js written in typescript. It includes standard middleware functions with default settings configured with express out of the box. It also includes a folder structure to help you get started with the project right away.
+Welcome to `express-api-ts-boilerplate` – a developer-friendly boilerplate that equips you with essential tools and a clear structure to build robust, scalable RESTful APIs using Express.js and TypeScript.
 
-## Getting started
+## 🚀 Why Choose This Boilerplate?
 
-Download the project in to your computer from the [releases](https://github.com/svijaykoushik/express-api-ts-boilerplate/releases) section and extract the contents in a known location. To install the dependencies use
+- **Ready-to-use Architecture**: Begin your project with a thoughtfully organized structure.
+- **Secure by Design**: Strengthen your API with built-in middleware such as Helmet and CORS.
+- **Database Integration**: Use SQLite3 with TypeORM or easily swap it out for MySQL, PostgreSQL, or MongoDB as needed.
+- **Validation Made Easy**: Utilize `class-validator` and `class-transformer` for streamlined data validation.
+- **API Documentation**: Effortlessly generate comprehensive API documentation using `swagger-jsdoc`.
+- **Enhanced Password Security**: Securely hash passwords with `bcrypt`.
+- **Type Safety**: Harness the power of TypeScript to catch errors early and improve code quality.
+- **Customizable**: Swap and customize packages as needed to suit your project requirements.
 
-`npm install`
+## 🛠 Getting Started
 
-Edit the package.json to fit your project and start working.
+1. **Clone the repository**:
+    ```shell
+    git clone https://github.com/svijaykoushik/express-api-ts-boilerplate.git
+    cd express-api-ts-boilerplate
+    ```
 
-## Packages included
-  
-1. helmet.
+2. **Install dependencies**:
+    ```shell
+    npm install
+    ```
 
-    Secures the api by setting various http headers. Get more information at <https://helmetjs.github.io/>
-2. body-parser.
+3. **Configure the application**:
+    - Create a `.env` file in the root directory for environment variables. Refer to the provided `.env.example` file.
 
-    Parses the request body from the incoming request. It's provided by express.js. Get more information at <https://github.com/expressjs/body-parser>
-3. cors.
+4. **Run the application**:
+    ```shell
+    npm start
+    ```
 
-    Used for setting up cross origin rules. It's also provided by express.js. Get more information at <https://github.com/expressjs/cors>
-4. typeorm.
+    Your server will start on the port specified in the configuration, typically `http://localhost:3000/`.
 
-    An ORM for Database operations. Get more information at <https://typeorm.io/>
-5. class-validator.
+## 🏗 Project Structure
 
-    Validator with typescript decorators. Get more information at <https://github.com/typestack/class-validator>
-6. jsonwebtoken.
+Explore the organized file structure designed to streamline your development workflow:
 
-    For Usage of JWT in the project. Get more information at <https://github.com/auth0/node-jsonwebtoken>
-7. jwk-to-pem.
+- `src/`: Main source code directory.
+    - `app/`: Application logic
+        - `routes/`: API route definitions.
+        - `controllers/`: Functions for handling requests and responses.
+        - `dtos/`: Data transfer objects to validate and structure requests.
+        - `error/`: Custom error handling.
+        - `models/`: Database schema and ORM models.
+        - `middleware/`: Middleware for handling requests.
+        - `services/`: Business logic and reusable functions.
+        - `config/`: Configuration files for database, security, and environment variables.
+        - `scripts/`: Standalone scripts and jobs.
 
-    Convert a json web key to a PEM for use by OpenSSL or crytpo. Get more information at <https://github.com/Brightspace/node-jwk-to-pem>
-8. bcrypt.
+## 📦 Key Packages
 
-    For hashing passwords. Get more information at <https://github.com/kelektiv/node.bcrypt.js>
-9. dotenv
-    For storing environment variables. Get more information at <https://github.com/motdotla/dotenv#readme>
-## Development tools
+- **Helmet**: Secures the API with additional HTTP headers. [Learn More](https://helmetjs.github.io/)
+- **CORS**: Configures cross-origin resource sharing. [Learn More](https://github.com/expressjs/cors)
+- **TypeORM**: ORM for various databases. [Learn More](https://typeorm.io/)
+- **SQLite3**: Non-blocking SQLite3 bindings for Node.js. [Learn More](https://github.com/TryGhost/node-sqlite3)
+- **class-validator**: Simplifies data validation with decorators. [Learn More](https://github.com/typestack/class-validator)
+- **class-transformer**: Transforms plain objects into class instances. [Learn More](https://github.com/typestack/class-transformer)
+- **swagger-jsdoc**: Generates OpenAPI (Swagger) specs from source code. [Learn More](https://github.com/Surnet/swagger-jsdoc)
+- **bcrypt**: Securely hashes passwords for enhanced security. [Learn More](https://github.com/kelektiv/node.bcrypt.js)
+- **dotenv**: Manages environment variables effortlessly. [Learn More](https://github.com/motdotla/dotenv)
 
-1. Mocha
+## 🧪 Development Tools
 
-    Test framework. Get more information at <https://mochajs.org/>
-2. Chai
+- **Mocha**: Powerful testing framework. [Learn More](https://mochajs.org/)
+- **Chai**: Assertion library for comprehensive testing. [Learn More](https://www.chaijs.com/)
+- **TS-Node**: Run TypeScript code directly without compilation. [Learn More](https://github.com/TypeStrong/ts-node)
+- **Nodemon**: Automatically restarts the server on file changes to streamline development. [Learn More](https://nodemon.io/)
 
-    Assertion tool used in combination with mocha. Get more information at <https://www.chaijs.com/>
-3. ts-node
+## 🤝 Join Us
 
-    Runs the project directly in typescript. Get more information at <https://github.com/TypeStrong/ts-node>
-4. Debugger
+We welcome contributions and collaborations! Here's how you can get involved:
 
-    Pre configured debug configuration for VScode editor.
+- **Contribute**: Submit pull requests for new features, bug fixes, or enhancements.
+- **Report Issues**: Let us know if you encounter any issues, and we'll work together to find solutions.
+- **Feedback**: Share your thoughts and suggestions to help us improve the project.
+
+Let’s build amazing APIs together! Feel free to star the repo and watch for future updates.
