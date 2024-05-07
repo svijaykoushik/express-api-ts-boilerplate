@@ -42,7 +42,6 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.2",
     "jwk-to-pem": "^2.0.5",
-    "prettier": "^3.1.1",
     "reflect-metadata": "^0.2.1",
     "sqlite3": "^5.1.7",
     "swagger-jsdoc": "^6.2.8",
@@ -64,6 +63,7 @@
     "chai": "^5.0.0",
     "eslint": "^8.56.0",
     "mocha": "^10.2.0",
+    "prettier": "^3.2.5",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
