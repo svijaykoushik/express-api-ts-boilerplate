@@ -1,6 +1,6 @@
 {
   "name": "express-api-ts-boilerplate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple boiler plate for rest-api with express written in typescript",
   "main": "build/index.js",
   "scripts": {
