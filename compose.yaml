@@ -27,6 +27,7 @@ services:
       - 5050:5050
     healthcheck:
       test: "curl -f http://localhost:5050"
+    restart: unless-stopped
 volumes:
   server-data:
 # The commented out section below is an example of how to define a PostgreSQL
