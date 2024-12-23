@@ -15,14 +15,18 @@ services:
       NODE_ENV: production
       TYPEORM_DATABASE: /home/app/data/play_ground.db
       TYPEORM_LOG_QUERY: false
-      APP_PORT: 3000
-      APP_URL: 0.0.0.0
-      SWAGGER_PORT: 3000
-      SWAGGER_DOMAIN: 0.0.0.0
+    develop:
+      watch:
+        - path: ./src
+          action: rebuild
+        - path: ./package.json
+          action: rebuild
     volumes:
       - server-data:/home/app/data
     ports:
       - 5050:5050
+    healthcheck:
+      test: "curl -f http://localhost:5050"
 volumes:
   server-data:
 # The commented out section below is an example of how to define a PostgreSQL
