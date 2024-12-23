@@ -71,7 +71,7 @@ export class App {
                     swaggerDefinition: {
                         ...apiDefintion
                     },
-                    apis: ['./src/app/routes/**/*.{js,ts}']
+                    apis: [join(__dirname,'./routes/**/*.{js,ts}')]
                 });
                 response.send(swaggerSpec);
             } catch (e) {
