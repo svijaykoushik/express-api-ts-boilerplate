@@ -24,9 +24,9 @@ services:
     volumes:
       - server-data:/home/app/data
     ports:
-      - 5050:5050
+      - ${APP_PORT:-5050}:5050
     healthcheck:
-      test: "curl -f http://localhost:5050"
+      test: "curl -f http://localhost:${APP_PORT:-5050}"
     restart: unless-stopped
 volumes:
   server-data:
