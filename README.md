@@ -99,6 +99,7 @@ Explore the organized file structure designed to streamline your development wor
 - **Chai**: Assertion library for comprehensive testing. [Learn More](https://www.chaijs.com/)
 - **TS-Node**: Run TypeScript code directly without compilation. [Learn More](https://github.com/TypeStrong/ts-node)
 - **Nodemon**: Automatically restarts the server on file changes to streamline development. [Learn More](https://nodemon.io/)
+- **Docker**: Build and test applications in a production-like environment. [Learn More](https://www.docker.com)
 
 ## 🤝 Join Us
 
