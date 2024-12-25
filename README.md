@@ -15,6 +15,8 @@ Welcome to `express-api-ts-boilerplate` – a developer-friendly boilerplate tha
 
 ## 🛠 Getting Started
 
+### Without Docker
+
 1. **Clone the repository**:
     ```shell
     git clone https://github.com/svijaykoushik/express-api-ts-boilerplate.git
@@ -34,7 +36,34 @@ Welcome to `express-api-ts-boilerplate` – a developer-friendly boilerplate tha
     npm start
     ```
 
-    Your server will start on the port specified in the configuration, typically `http://localhost:3000/`.
+    Your server will start on the port specified in the configuration, typically `http://localhost:5050/`.
+
+### With Docker
+
+1. **Clone the repository**:
+   ```shell
+    git clone https://github.com/svijaykoushik/express-api-ts-boilerplate.git
+    cd express-api-ts-boilerplate
+   ```
+
+2. **Create a .env file**:
+    ```shell
+    cp .env.example .env
+    ```
+
+3. **Run the application with Docker**:
+
+    - For development:
+        ```shell
+        docker compose up --watch
+        ```
+
+    - Run the application:
+        ```shell
+        docker compose up --build
+        ```
+
+For more information on using docker please check this [guide](README.Docker.md)
 
 ## 🏗 Project Structure
 
@@ -70,6 +99,7 @@ Explore the organized file structure designed to streamline your development wor
 - **Chai**: Assertion library for comprehensive testing. [Learn More](https://www.chaijs.com/)
 - **TS-Node**: Run TypeScript code directly without compilation. [Learn More](https://github.com/TypeStrong/ts-node)
 - **Nodemon**: Automatically restarts the server on file changes to streamline development. [Learn More](https://nodemon.io/)
+- **Docker**: Build and test applications in a production-like environment. [Learn More](https://www.docker.com)
 
 ## 🤝 Join Us
 
