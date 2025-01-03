@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { ApiRouter } from './api-router';
+import { ApiRouter } from '../helpers/api-router';
 
 export class RootRouter implements ApiRouter {
     public readonly baseUrl = '/';

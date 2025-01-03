@@ -5,7 +5,7 @@ import {
     NextFunction,
     RequestHandler
 } from 'express';
-import { ApiRouter } from '../api-router';
+import { ApiRouter } from '../../helpers/api-router';
 import { ApiResponse } from '../../helpers/api-response';
 
 export class AuthRouter implements ApiRouter {

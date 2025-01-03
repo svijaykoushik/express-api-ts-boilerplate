@@ -7,7 +7,7 @@ import {
     RequestHandler
 } from 'express';
 import { AppController } from 'src/app/controllers/app-contoller';
-import { ApiRouter } from './api-router';
+import { ApiRouter } from '../helpers/api-router';
 
 export class AppRouter implements ApiRouter {
     public readonly baseUrl = '/api/v1/app';

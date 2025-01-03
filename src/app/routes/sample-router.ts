@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Router } from 'express';
 import { SampleController } from 'src/app/controllers/sample/sample-contoller';
-import { ApiRouter } from './api-router';
+import { ApiRouter } from '../helpers/api-router';
 
 export class SampleRouter implements ApiRouter {
     public readonly baseUrl = '/sample';
