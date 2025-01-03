@@ -34,7 +34,7 @@ export class AppRouter implements ApiRouter {
          *       200:
          *         description: Application works
          */
-        this.router.get(`${this.baseUrl}/sample`, (async (
+        this.router.get('/sample', (async (
             req: Request,
             res: Response,
             next: NextFunction

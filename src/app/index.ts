@@ -3,7 +3,6 @@ import helmet from 'helmet';
 // import cors from 'cors';
 import { AddressInfo } from 'net';
 import { Server } from 'http';
-import { routes } from './routes';
 import {
     routeErrorHandler,
     unhandledErrorHandler,
@@ -12,6 +11,7 @@ import {
 import { join } from 'path';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { apiDefintion } from './config/swagger-config';
+import { route } from './routes';
 // import { DomainRestrictedException } from './error/domain-restricted-exception';
 
 export class App {
@@ -81,9 +81,7 @@ export class App {
     }
 
     private initRoutes() {
-        routes.forEach((route) => {
-            this.app.use(route.Router);
-        });
+        this.app.use(route.Router);
         this.app.use(routeErrorHandler);
     }
 

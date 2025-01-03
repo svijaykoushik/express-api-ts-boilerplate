@@ -5,7 +5,7 @@ export class RootRouter implements ApiRouter {
     public readonly baseUrl = '/';
     private readonly router: Router;
 
-    public constructor() {
+    public constructor(...subRoutes: ApiRouter[]) {
         this.router = Router();
 
         /**
@@ -13,7 +13,7 @@ export class RootRouter implements ApiRouter {
          * /:
          *   get:
          *     summary: The entry point of the application
-         *     description: The entry poin of the application
+         *     description: The entry point of the application
          *     tags:
          *       - Entry Point
          *     responses:
@@ -25,6 +25,10 @@ export class RootRouter implements ApiRouter {
                 message: 'Welcome'
             });
         });
+
+        for(const subRoute of subRoutes){
+            this.router.use(subRoute.baseUrl, subRoute.Router);
+        }
     }
 
     public get Router(): Router {

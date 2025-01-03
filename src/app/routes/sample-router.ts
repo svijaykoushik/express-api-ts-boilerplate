@@ -28,7 +28,7 @@ export class SampleRouter implements ApiRouter {
          *       200:
          *         description: Application works
          */
-        this.router.get(this.baseUrl, this.sampleController.getSample);
+        this.router.get('/', this.sampleController.getSample);
 
         /**
          * @openapi
@@ -42,9 +42,6 @@ export class SampleRouter implements ApiRouter {
          *       500:
          *         description: Internal server error
          */
-        this.router.get(
-            this.baseUrl + '/error',
-            this.sampleController.getError
-        );
+        this.router.get('/error', this.sampleController.getError);
     }
 }
