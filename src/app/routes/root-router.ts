@@ -2,7 +2,8 @@ import { Router } from 'express';
 import { ApiRouter } from './api-router';
 
 export class RootRouter implements ApiRouter {
-    private router: Router;
+    public readonly baseUrl = '/';
+    private readonly router: Router;
 
     public constructor() {
         this.router = Router();
@@ -19,7 +20,7 @@ export class RootRouter implements ApiRouter {
          *       200:
          *         description: Ok
          */
-        this.router.get('/', (request, response) => {
+        this.router.get(this.baseUrl, (request, response) => {
             response.status(200).send({
                 message: 'Welcome'
             });

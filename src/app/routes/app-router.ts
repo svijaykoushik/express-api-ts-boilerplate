@@ -10,8 +10,8 @@ import { AppController } from 'src/app/controllers/app-contoller';
 import { ApiRouter } from './api-router';
 
 export class AppRouter implements ApiRouter {
+    public readonly baseUrl = '/api/v1/app';
     private router: Router;
-    private baseUrl = '/api/v1/app';
     public constructor(private appController: AppController) {
         this.router = Router();
         this.initRoutes();

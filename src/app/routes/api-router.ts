@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
 export interface ApiRouter {
-    Router: Router;
+    readonly Router: Router;
+    readonly baseUrl: string;
 }
