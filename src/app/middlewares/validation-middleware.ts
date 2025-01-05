@@ -4,7 +4,7 @@ import {
     plainToInstance
 } from 'class-transformer';
 import { validate, ValidationError } from 'class-validator';
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import {
     InvalidRequestBodyException,
     InvalidRequestException
@@ -15,9 +15,15 @@ import { trimSanitizer } from '../helpers/trimmer';
 export function BodyValidationMiddleware(
     classType: ClassConstructor<unknown>,
     skipMissingProperties = false
-) {
-    return async (request: Request, response: Response, next: NextFunction) => {
-        const reqBody = plainToInstance(classType, { ...request.body });
+): RequestHandler {
+    return (async (
+        request: Request,
+        response: Response,
+        next: NextFunction
+    ) => {
+        const reqBody: object = plainToInstance(classType, {
+            ...request.body
+        }) as object;
 
         // Sanitize the request body by trimming the strings
         trimSanitizer.sanitize(reqBody);
@@ -41,7 +47,7 @@ export function BodyValidationMiddleware(
         } catch (e) {
             next(new UnhandledException(e));
         }
-    };
+    }) as RequestHandler;
 }
 
 export function QueryValidationMiddleware(
