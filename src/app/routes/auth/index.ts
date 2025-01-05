@@ -7,6 +7,8 @@ import {
 } from 'express';
 import { ApiRouter } from '../../helpers/api-router';
 import { ApiResponse } from '../../helpers/api-response';
+import { RegisterDTO, TokenDTO } from '../../dtos';
+import { BodyValidationMiddleware } from '../../middlewares';
 
 export class AuthRouter implements ApiRouter {
     public readonly baseUrl = '/auth';
@@ -98,7 +100,7 @@ export class AuthRouter implements ApiRouter {
          *                   type: string
          *                   example: An unexpected error occurred.
          */
-        this.router.post('/register', ((
+        this.router.post('/register', BodyValidationMiddleware(RegisterDTO), ((
             req: Request,
             res: Response,
             next: NextFunction
@@ -194,7 +196,7 @@ export class AuthRouter implements ApiRouter {
          *                   type: string
          *                   example: An unexpected error occurred.
          */
-        this.router.post('/token', ((
+        this.router.post('/token', BodyValidationMiddleware(TokenDTO), ((
             req: Request,
             res: Response,
             next: NextFunction
