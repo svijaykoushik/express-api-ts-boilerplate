@@ -9,13 +9,14 @@ import { ApiRouter } from '../../helpers/api-router';
 import { ApiResponse } from '../../helpers/api-response';
 import { RegisterDTO, TokenDTO } from '../../dtos';
 import { BodyValidationMiddleware } from '../../middlewares';
+import { AuthController } from '../../controllers';
 
 export class AuthRouter implements ApiRouter {
     public readonly baseUrl = '/auth';
 
     private router: Router;
 
-    public constructor() {
+    public constructor(private authController: AuthController) {
         this.router = Router();
         this.initRoutes();
     }
@@ -100,16 +101,17 @@ export class AuthRouter implements ApiRouter {
          *                   type: string
          *                   example: An unexpected error occurred.
          */
-        this.router.post('/register', BodyValidationMiddleware(RegisterDTO), ((
-            req: Request,
-            res: Response,
-            next: NextFunction
-        ) => {
-            // [TODO] implement signup
-            res.status(501).send(
-                new ApiResponse(501, null, 'Method not implemented')
-            );
-        }) as RequestHandler);
+        this.router.post(
+            '/register',
+            BodyValidationMiddleware(RegisterDTO),
+            (async (req: Request, res: Response, next: NextFunction) => {
+                await this.authController.registerWithEmailAndPassword(
+                    req,
+                    res,
+                    next
+                );
+            }) as RequestHandler
+        );
 
         /**
          * @openapi

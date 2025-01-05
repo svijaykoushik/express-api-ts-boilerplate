@@ -1,0 +1,81 @@
+import { NextFunction, Request, Response } from 'express';
+import { AuthService } from '../../services/auth/auth-service';
+import { plainToInstance } from 'class-transformer';
+import { RegisterDTO } from '../../dtos';
+import { UnhandledException } from '../../error/unhandled-exception';
+import { ExceptionDetails } from '../../error/api-exception';
+import { User } from '../../models/entities/User';
+import { sign } from 'jsonwebtoken';
+import { v4 } from 'uuid';
+import { ApiResponse } from '../../helpers/api-response';
+import { randomBytes } from 'crypto';
+
+export class AuthController {
+    public constructor(private authService: AuthService) {}
+
+    public async registerWithEmailAndPassword(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ) {
+        const payload = plainToInstance(RegisterDTO, req.body);
+        try {
+            const user = await this.authService.registerWithEmailAndPassword(
+                payload.email,
+                payload.password
+            );
+            const accessToken = await this.generateAccessToken({
+                email: user.email,
+                id: user.id
+            });
+            res.status(201).send(
+                new ApiResponse(201, {
+                    userinfo: {
+                        email: user.email,
+                        id: user.id
+                    },
+                    access_token: accessToken,
+                    token_type: 'bearer'
+                })
+            );
+        } catch (e) {
+            next(
+                new UnhandledException(
+                    e,
+                    new ExceptionDetails('auth-registration-failed', null)
+                )
+            );
+        }
+    }
+
+    public async generateAccessToken(
+        userinfo: Pick<User, 'email' | 'id'>
+    ): Promise<string> {
+        const jwt = await new Promise<string>((resolve, reject) => {
+            sign(
+                {
+                    userinfo: {
+                        ...userinfo
+                    }
+                },
+                randomBytes(32),
+                {
+                    algorithm: 'none',
+                    expiresIn: '1h',
+                    issuer: `http://${process.env.APP_DOMAIN}:${process.env.APP_PORT}/auth`,
+                    jwtid: v4(),
+                    subject: userinfo.id
+                },
+                (error, encoded) => {
+                    if (error) {
+                        reject(error);
+                        return;
+                    }
+
+                    resolve(encoded);
+                }
+            );
+        });
+        return jwt;
+    }
+}
