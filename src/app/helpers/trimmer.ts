@@ -26,7 +26,7 @@ interface TrimData {
     /**
      * The target Class to be sanitized.
      */
-    target: Object;
+    target: object;
 
     /**
      * The name of the property to be sanitized.
@@ -45,7 +45,7 @@ interface TrimData {
  * 'Trim' decorator
  */
 class TrimSanitizerDataStore {
-    private dataStore: Map<Object, TrimData[]>;
+    private dataStore: Map<object, TrimData[]>;
 
     public constructor() {
         this.dataStore = new Map();
@@ -58,11 +58,11 @@ class TrimSanitizerDataStore {
         this.dataStore.get(data.target)!.push(data);
     }
 
-    public getDataToTrim(target: Object) {
+    public getDataToTrim(target: object) {
         const targetPrototype = Object.getPrototypeOf(target);
-        const targetData = this.dataStore.get(targetPrototype) || [];
+        const targetData = this.dataStore.get(targetPrototype as object) || [];
         const parentPrototype = Object.getPrototypeOf(targetPrototype);
-        const parentData = this.dataStore.get(parentPrototype) || [];
+        const parentData = this.dataStore.get(parentPrototype as object) || [];
         return [...targetData, ...parentData];
     }
 }
@@ -80,11 +80,11 @@ class TrimSanitizer {
     }
 
     /**
-     * Sanitizes a class instace by trimming the string properties that are decorated with
+     * Sanitizes a class instance by trimming the string properties that are decorated with
      * the 'Trim' decorator
      * @param classInstance Instance of the class to be sanitized
      */
-    public sanitize(classInstance: Object) {
+    public sanitize(classInstance: object) {
         const trimData = this.trimDataStore.getDataToTrim(classInstance);
         trimData
             .filter((datum) => {
