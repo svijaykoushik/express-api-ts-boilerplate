@@ -61,6 +61,7 @@ export class App {
         //     })
         // );
         this.app.use(express.json({ limit: '50mb' }));
+        this.app.use(express.urlencoded({ extended: true }));
 
         const apiDocsPath = join(__dirname, '../api-docs');
         this.app.use('/api-docs', express.static(apiDocsPath));
@@ -71,7 +72,7 @@ export class App {
                     swaggerDefinition: {
                         ...apiDefintion
                     },
-                    apis: [join(__dirname,'./routes/**/*.{js,ts}')]
+                    apis: [join(__dirname, './routes/**/*.{js,ts}')]
                 });
                 response.send(swaggerSpec);
             } catch (e) {
