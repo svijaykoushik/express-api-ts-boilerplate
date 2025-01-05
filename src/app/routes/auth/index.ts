@@ -103,7 +103,7 @@ export class AuthRouter implements ApiRouter {
             res: Response,
             next: NextFunction
         ) => {
-            // [TODO] implement singup
+            // [TODO] implement signup
             res.status(501).send(
                 new ApiResponse(501, null, 'Method not implemented')
             );
@@ -214,7 +214,7 @@ export class AuthRouter implements ApiRouter {
          *     tags:
          *       - Authentication
          *     security:
-         *       - bearerAuth: []
+         *       - oAuth: [profile]
          *     responses:
          *       204:
          *         description: Successfully logged out. No content is returned.
