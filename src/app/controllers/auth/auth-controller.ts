@@ -41,7 +41,7 @@ export class AuthController {
         } catch (e) {
             if (e instanceof ApiException) {
                 next(e);
-                return
+                return;
             }
             next(
                 new UnhandledException(
@@ -55,7 +55,7 @@ export class AuthController {
     public async generateAccessToken(
         userinfo: Pick<User, 'email' | 'id'>
     ): Promise<string> {
-        const jwt = await new Promise<string>((resolve, reject) => {
+        return await new Promise<string>((resolve, reject) => {
             sign(
                 {
                     userinfo: {
@@ -80,6 +80,5 @@ export class AuthController {
                 }
             );
         });
-        return jwt;
     }
 }

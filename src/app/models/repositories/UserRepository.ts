@@ -8,6 +8,8 @@ export interface UserRepository {
         this: Repository<User>,
         userInfo: Pick<User, 'email' | 'password'>
     ) => Promise<User>;
+
+    findOneByEmail: (this: Repository<User>, email: string) => Promise<User>;
 }
 
 export const userRepository = getDataSource()
@@ -17,13 +19,17 @@ export const userRepository = getDataSource()
             this: Repository<User>,
             userInfo: Pick<User, 'email' | 'password'>
         ): Promise<User> {
-            const user = await this.save(
+            return await this.save(
                 this.create({
                     id: v4(),
                     email: userInfo.email,
                     password: userInfo.password
                 })
             );
-            return user;
+        },
+        async findOneByEmail(this: Repository<User>, email: string): Promise<User> {
+            return await this.findOneBy({
+                email
+            });
         }
     });
