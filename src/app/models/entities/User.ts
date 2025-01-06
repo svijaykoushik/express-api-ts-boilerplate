@@ -1,11 +1,11 @@
 import { Column, Entity, PrimaryColumn, Unique } from 'typeorm';
 
+@Unique('UQ_email', ['email'])
 @Entity()
 export class User {
     @PrimaryColumn('text', { name: 'id' })
     id: string;
 
-    @Unique('UQ_email', ['email'])
     @Column('text', { name: 'email' })
     email: string;
 
