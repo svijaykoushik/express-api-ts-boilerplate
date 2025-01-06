@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth/auth-service';
 import { plainToInstance } from 'class-transformer';
 import { RegisterDTO } from '../../dtos';
 import { UnhandledException } from '../../error/unhandled-exception';
-import { ExceptionDetails } from '../../error/api-exception';
+import { ApiException, ExceptionDetails } from '../../error/api-exception';
 import { User } from '../../models/entities/User';
 import { sign } from 'jsonwebtoken';
 import { v4 } from 'uuid';
@@ -39,6 +39,10 @@ export class AuthController {
                 })
             );
         } catch (e) {
+            if (e instanceof ApiException) {
+                next(e);
+                return
+            }
             next(
                 new UnhandledException(
                     e,
