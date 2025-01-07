@@ -1,7 +1,10 @@
-import { accessSync, constants, existsSync } from 'fs';
+import 'reflect-metadata';
 import { config } from 'dotenv';
-import { dirname, join } from 'path';
+import { existsSync } from 'fs';
+import { join } from 'path';
 import { exit } from 'process';
+import { App } from './app';
+import getDataSource from './app/config/db-config';
 
 // Load the configuration as soon as possible
 
@@ -9,10 +12,7 @@ if (existsSync(join(__dirname, '../.env'))) {
     config({ path: join(__dirname, '../.env') });
 }
 
-if (
-    !process.env.TYPEORM_DATABASE ||
-    !process.env.TYPEORM_LOG_QUERY
-) {
+if (!process.env.TYPEORM_DATABASE || !process.env.TYPEORM_LOG_QUERY) {
     process.env.TYPEORM_DATABASE =
         process.env.TYPEORM_DATABASE || 'play_ground.db';
     process.env.TYPEORM_LOG_QUERY =
@@ -30,9 +30,6 @@ process.env.SWAGGER_DOMAIN = process.env.SWAGGER_DOMAIN || '0.0.0.0';
 
 process.env.APP_PORT = process.env.APP_PORT || (5050).toString();
 process.env.APP_URL = process.env.APP_URL || '0.0.0.0';
-
-import { App } from './app';
-import getDataSource from './app/config/db-config';
 
 class Server {
     public static async main(): Promise<void> {
