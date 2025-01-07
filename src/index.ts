@@ -26,7 +26,7 @@ if (
 }
 
 process.env.SWAGGER_PORT = process.env.SWAGGER_PORT || (5050).toString();
-process.env.SWAGGER_DOMAIN = process.env.SWAGGER_DOMAIN || '0.0.0.0';
+process.env.SWAGGER_DOMAIN = process.env.SWAGGER_DOMAIN || 'localhost';
 
 process.env.APP_PORT = process.env.APP_PORT || (5050).toString();
 process.env.APP_URL = process.env.APP_URL || '0.0.0.0';
