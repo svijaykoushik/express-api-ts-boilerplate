@@ -1,5 +1,7 @@
-import { write } from 'fs';
 import { OAS3Definition } from 'swagger-jsdoc';
+import { config } from 'dotenv';
+import { join } from 'path';
+config({ path: join(__dirname, '../../../.env') });
 
 export const apiDefintion: OAS3Definition = {
     openapi: '3.0.0',
