@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { ApiResponse } from '../helpers/api-response';
 
 export function unhandledErrorHandler(
     error: Error,
@@ -11,9 +12,15 @@ export function unhandledErrorHandler(
         message: error.message,
         stack: error.stack
     });
-    response.status(500).send({
-        message: 'something broke!'
-    });
+    response
+        .status(500)
+        .send(
+            new ApiResponse(
+                500,
+                { error: 'unhandled_error' },
+                'something broke!'
+            )
+        );
 }
 
 export function routeErrorHandler(

@@ -159,11 +159,22 @@ export class AuthRouter implements ApiRouter {
          *             schema:
          *               type: object
          *               properties:
-         *                 accessToken:
+         *                 userinfo:
+         *                   type: object
+         *                   properties:
+         *                     email:
+         *                       type: string
+         *                       format: email
+         *                       description: The authenticated user's email.
+         *                     id:
+         *                       type: string
+         *                       description: The authenticated user's id.
+         *                   description: The authenticated userinfo.
+         *                 access_token:
          *                   type: string
          *                   description: The newly issued access token.
          *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-         *                 refreshToken:
+         *                 refresh_token:
          *                   type: string
          *                   description: The newly issued refresh token.
          *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...

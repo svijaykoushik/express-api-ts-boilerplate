@@ -47,7 +47,7 @@ export class AuthController {
             next(
                 new UnhandledException(
                     e,
-                    new ExceptionDetails('auth-registration-failed', null)
+                    'auth-registration-failed'
                 )
             );
         }
@@ -64,7 +64,7 @@ export class AuthController {
                             payload.password
                         );
                         res.status(201).send(
-                            new ApiResponse(201, {
+                            new ApiResponse(200, {
                                 userinfo: result.userinfo,
                                 access_token: result.access_token,
                                 token_type: 'bearer'
@@ -73,7 +73,7 @@ export class AuthController {
                     }
                     break;
                 default:
-                    next(new ApiException(400, 'Invalid grant'));
+                    next(new ApiException(400, 'Invalid grant', 'invalid_grant'));
             }
         } catch (e) {
             if (e instanceof ApiException) {
@@ -83,7 +83,7 @@ export class AuthController {
             next(
                 new UnhandledException(
                     e,
-                    new ExceptionDetails('auth-registration-failed', null)
+                    'auth-registration-failed'
                 )
             );
         }

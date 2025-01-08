@@ -2,8 +2,12 @@ import { ValidationError } from 'class-validator';
 import { ApiException, ExceptionDetails } from './api-exception';
 
 export class InvalidRequestException extends ApiException {
-    constructor(message: string, errorCode: string, details: any) {
-        super(400, message, new ExceptionDetails(errorCode, details));
+    constructor(
+        message: string,
+        errorCode: string,
+        details: Record<string, any>
+    ) {
+        super(400, message, 'invalid_request', new ExceptionDetails(details));
     }
 }
 
@@ -12,7 +16,8 @@ export class InvalidRequestBodyException extends ApiException {
         super(
             400,
             'Required parameters in request body are either missing or invalid',
-            new ExceptionDetails('INVALID_REQUEST_BODY', validationErrors)
+            'invalid_request',
+            new ExceptionDetails({ validationErrors: validationErrors })
         );
     }
 }

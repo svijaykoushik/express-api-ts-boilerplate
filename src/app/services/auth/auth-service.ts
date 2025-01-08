@@ -12,7 +12,7 @@ export class AuthService {
     public async registerWithEmailAndPassword(email: string, password: string) {
         let user: User = await this.userRepository.findOneByEmail(email);
         if (user) {
-            throw new ApiException(409, 'User already exists');
+            throw new ApiException(409, 'User already exists', 'user_exists');
         }
         user = await this.userRepository.saveUser({
             email,
@@ -25,11 +25,11 @@ export class AuthService {
     public async signInWithEmailAndPassword(email: string, password: string) {
         const user: User = await this.userRepository.findOneByEmail(email);
         if(!user) {
-            throw new ApiException(400, 'Invalid credentials');
+            throw new ApiException(400, 'Invalid credentials', 'invalid_credentials');
         }
 
         if(await compare(password, user.password) === false) {
-            throw new ApiException(400, 'Invalid credentials');
+            throw new ApiException(400, 'Invalid credentials','invalid_credentials');
         }
 
         return user;
