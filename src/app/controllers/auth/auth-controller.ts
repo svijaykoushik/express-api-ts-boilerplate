@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { AuthService } from '../../services/auth/auth-service';
 import { plainToInstance } from 'class-transformer';
-import { RegisterDTO } from '../../dtos';
+import { RegisterDTO, TokenDTO } from '../../dtos';
 import { UnhandledException } from '../../error/unhandled-exception';
 import { ApiException, ExceptionDetails } from '../../error/api-exception';
 import { User } from '../../models/entities/User';
@@ -9,6 +9,7 @@ import { sign } from 'jsonwebtoken';
 import { v4 } from 'uuid';
 import { ApiResponse } from '../../helpers/api-response';
 import { randomBytes } from 'crypto';
+import { GrantTypes } from '../../enums';
 
 export class AuthController {
     public constructor(private authService: AuthService) {}
@@ -52,6 +53,42 @@ export class AuthController {
         }
     }
 
+    public async authenticate(req: Request, res: Response, next: NextFunction) {
+        const payload = plainToInstance(TokenDTO, req.body);
+        try {
+            switch (payload.grant_type) {
+                case GrantTypes.Password:
+                    {
+                        const result = await this.handlePasswordGrant(
+                            payload.email,
+                            payload.password
+                        );
+                        res.status(201).send(
+                            new ApiResponse(201, {
+                                userinfo: result.userinfo,
+                                access_token: result.access_token,
+                                token_type: 'bearer'
+                            })
+                        );
+                    }
+                    break;
+                default:
+                    next(new ApiException(400, 'Invalid grant'));
+            }
+        } catch (e) {
+            if (e instanceof ApiException) {
+                next(e);
+                return;
+            }
+            next(
+                new UnhandledException(
+                    e,
+                    new ExceptionDetails('auth-registration-failed', null)
+                )
+            );
+        }
+    }
+
     public async generateAccessToken(
         userinfo: Pick<User, 'email' | 'id'>
     ): Promise<string> {
@@ -80,5 +117,23 @@ export class AuthController {
                 }
             );
         });
+    }
+
+    private async handlePasswordGrant(email: string, password: string) {
+        const user = await this.authService.signInWithEmailAndPassword(
+            email,
+            password
+        );
+        const accessToken = await this.generateAccessToken({
+            email: user.email,
+            id: user.id
+        });
+        return {
+            userinfo: {
+                email: user.email,
+                id: user.id
+            },
+            access_token: accessToken
+        };
     }
 }

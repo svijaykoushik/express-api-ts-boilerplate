@@ -198,15 +198,12 @@ export class AuthRouter implements ApiRouter {
          *                   type: string
          *                   example: An unexpected error occurred.
          */
-        this.router.post('/token', BodyValidationMiddleware(TokenDTO), ((
+        this.router.post('/token', BodyValidationMiddleware(TokenDTO), (async (
             req: Request,
             res: Response,
             next: NextFunction
         ) => {
-            // [TODO] implement token issue
-            res.status(501).send(
-                new ApiResponse(501, null, 'Method not implemented')
-            );
+            await this.authController.authenticate(req, res, next);
         }) as RequestHandler);
 
         /**
