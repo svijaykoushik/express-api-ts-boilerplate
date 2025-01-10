@@ -47,7 +47,7 @@ export class AuthController {
             next(
                 new UnhandledException(
                     e,
-                    'auth-registration-failed'
+                    new ExceptionDetails('auth-registration-failed')
                 )
             );
         }
@@ -73,7 +73,15 @@ export class AuthController {
                     }
                     break;
                 default:
-                    next(new ApiException(400, 'Invalid grant', 'invalid_grant'));
+                    next(
+                        new ApiException(
+                            400,
+                            new ExceptionDetails(
+                                'invalid_grant',
+                                'Invalid grant'
+                            )
+                        )
+                    );
             }
         } catch (e) {
             if (e instanceof ApiException) {
@@ -83,7 +91,7 @@ export class AuthController {
             next(
                 new UnhandledException(
                     e,
-                    'auth-registration-failed'
+                    new ExceptionDetails('auth-registration-failed')
                 )
             );
         }

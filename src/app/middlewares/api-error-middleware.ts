@@ -9,22 +9,14 @@ export function apiErrorHandler(
     next: NextFunction
 ): void {
     console.error(error);
-    const data: Record<string, any> = {
-        inner_error: error.innerError
-    };
-    if (error.details) {
-        for (const [key, val] of Object.entries(error.details)) {
-            data[key] = val;
-        }
+    const data: Record<string, any> = {};
+    for (const [key, val] of Object.entries(error.details)) {
+        data[key] = val;
     }
     response.status(error.httpCode).send(
         new ApiResponse(
             error.httpCode,
-            {
-                error: error.error_code,
-                details: error.details,
-                inner_error: error.innerError
-            },
+            data,
             error.message
         )
     );

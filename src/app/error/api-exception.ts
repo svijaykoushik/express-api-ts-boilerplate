@@ -1,30 +1,28 @@
 export class ExceptionDetails {
+    error_code: string;
+    data?: any;
     error_description?: string | undefined;
-    data: any;
+    error_uri?: string;
+    innerError?: any;
     constructor(
-        data: Record<string, any>,
-        error_description?: string | undefined
+        error_code: string,
+        error_description?: string | undefined,
+        error_uri?: URL | undefined,
+        data?: Record<string, any>
     ) {
-        (this.data = data), (this.error_description = error_description);
+        (this.error_code = error_code),
+            (this.data = data),
+            (this.error_description = error_description),
+            (this.error_uri = error_uri?.toString());
     }
 }
 
 export class ApiException extends Error {
     httpCode = -1;
     details: ExceptionDetails;
-    innerError: any;
-    error_code: string;
-    constructor(
-        httpCode: number,
-        message: string,
-        error_code: string,
-        details?: ExceptionDetails,
-        innerError?: any
-    ) {
-        super(message);
+    constructor(httpCode: number, details: ExceptionDetails) {
+        super(details.error_description || details.error_code);
         this.httpCode = httpCode;
-        this.error_code = error_code;
         this.details = details;
-        this.innerError = innerError;
     }
 }
