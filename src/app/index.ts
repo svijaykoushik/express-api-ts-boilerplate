@@ -70,7 +70,12 @@ export class App {
                 response.setHeader('Content-Type', 'application/json');
                 const swaggerSpec = swaggerJsdoc({
                     swaggerDefinition: {
-                        ...apiDefintion
+                        ...apiDefintion,
+                        servers: [
+                            {
+                                url: `http://${process.env.SWAGGER_DOMAIN}:${process.env.SWAGGER_PORT}`
+                            }
+                        ]
                     },
                     apis: [join(__dirname, './routes/**/*.{js,ts}')]
                 });

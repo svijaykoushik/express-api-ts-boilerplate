@@ -1,7 +1,4 @@
 import { OAS3Definition } from 'swagger-jsdoc';
-import { config } from 'dotenv';
-import { join } from 'path';
-config({ path: join(__dirname, '../../../.env') });
 
 export const apiDefintion: OAS3Definition = {
     openapi: '3.0.0',
@@ -11,11 +8,6 @@ export const apiDefintion: OAS3Definition = {
         description: 'Project X API',
         termsOfService: ''
     },
-    servers: [
-        {
-            url: `http://${process.env.SWAGGER_DOMAIN}:${process.env.SWAGGER_PORT}`
-        }
-    ],
     components: {
         securitySchemes: {
             oAuth: {
