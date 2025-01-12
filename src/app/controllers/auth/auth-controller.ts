@@ -10,6 +10,7 @@ import { v4 } from 'uuid';
 import { ApiResponse } from '../../helpers/api-response';
 import { randomBytes } from 'crypto';
 import { GrantTypes } from '../../enums';
+import { UserInfo } from '../../../types/userinfo';
 
 export class AuthController {
     public constructor(private authService: AuthService) {}
@@ -115,6 +116,22 @@ export class AuthController {
                         )
                     );
             }
+        } catch (e) {
+            if (e instanceof ApiException) {
+                next(e);
+                return;
+            }
+            next(
+                new UnhandledException(e, new ExceptionDetails('auth-failed'))
+            );
+        }
+    }
+
+    public async getUserInfo(req: Request, res: Response, next: NextFunction) {
+        const reqUserInfo: UserInfo = structuredClone(req['userinfo']);
+        try {
+            const userinfo = await this.authService.getUserInfo(reqUserInfo.id);
+            res.status(200).send(new ApiResponse(200, userinfo));
         } catch (e) {
             if (e instanceof ApiException) {
                 next(e);

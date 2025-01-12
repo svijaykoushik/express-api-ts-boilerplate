@@ -1,32 +1,49 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import { ApiException, ExceptionDetails } from '../error/api-exception';
 import { AuthService } from '../services/auth/auth-service';
-import { userRepository } from '../models/repositories/UserRepository';
-import { refreshTokenRepository } from '../models/repositories/RefreshTokenRepository';
+import { UnhandledException } from '../error/unhandled-exception';
 
-export async function AuthorizationMiddleware(
-    req: Request,
-    res: Response,
-    next: NextFunction
-) {
-    const authService = new AuthService(userRepository, refreshTokenRepository);
-    const accessToken = req.headers.authorization?.split(' ')?.[1];
-    if (!accessToken) {
-        return next(
-            new ApiException(
-                401,
-                new ExceptionDetails(
-                    'invalid_grant',
-                    'Token missing. Access token is required to serve this request'
+export function AuthorizationMiddleware(authService: AuthService) {
+    return (async (req: Request, res: Response, next: NextFunction) => {
+        const accessToken = req.headers.authorization?.split(' ')?.[1];
+        if (!accessToken) {
+            next(
+                new ApiException(
+                    401,
+                    new ExceptionDetails(
+                        'invalid_grant',
+                        'Token missing. Access token is required to serve this request'
+                    )
                 )
-            )
-        );
-    }
-    const userinfo = await authService.verifyTokenAndGetPayload(
-        accessToken,
-        process.env.ACCESS_TOKEN_SECRET
-    );
+            );
+            return;
+        }
+        try {
+            const userinfo = await authService.verifyTokenAndGetPayload(
+                accessToken,
+                process.env.ACCESS_TOKEN_SECRET
+            );
 
-    req['userinfo'] = structuredClone(userinfo);
-    next();
+            if (!userinfo) {
+                return next(
+                    new ApiException(
+                        401,
+                        new ExceptionDetails(
+                            'invalid_grant',
+                            'Invalid or expired token.'
+                        )
+                    )
+                );
+            }
+
+            req['userinfo'] = JSON.parse(JSON.stringify(userinfo)); //structuredClone is not available in nodejs, using JSON parse and stringify instead
+            next();
+        } catch (error) {
+            console.error('Token verification error:', error); // Important: Log the error for debugging
+            if (error instanceof ApiException) {
+                return next(error);
+            }
+            return next(new UnhandledException(error));
+        }
+    }) as RequestHandler;
 }

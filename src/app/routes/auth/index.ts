@@ -10,6 +10,10 @@ import { ApiResponse } from '../../helpers/api-response';
 import { RegisterDTO, TokenDTO } from '../../dtos';
 import { BodyValidationMiddleware } from '../../middlewares';
 import { AuthController } from '../../controllers';
+import { AuthorizationMiddleware } from '../../middlewares/authorization-middleware';
+import { AuthService } from '../../services/auth/auth-service';
+import { userRepository } from '../../models/repositories/UserRepository';
+import { refreshTokenRepository } from '../../models/repositories/RefreshTokenRepository';
 
 export class AuthRouter implements ApiRouter {
     public readonly baseUrl = '/auth';
@@ -262,5 +266,104 @@ export class AuthRouter implements ApiRouter {
                 new ApiResponse(501, null, 'Method not implemented')
             );
         }) as RequestHandler);
+
+        /**
+         * @swagger
+         * /auth/userinfo:
+         *   get:
+         *     summary: Retrieve user information
+         *     description: This endpoint retrieves user information based on the access token provided in the request.
+         *     tags:
+         *       - Authentication
+         *     security:
+         *       - oAuth: [profile]
+         *     responses:
+         *       200:
+         *         description: User information retrieved successfully.
+         *         content:
+         *           application/json:
+         *             schema:
+         *               type: object
+         *               properties:
+         *                 status_code:
+         *                   type: integer
+         *                   description: HTTP status code indicating success.
+         *                   example: 200
+         *                 id:
+         *                   type: string
+         *                   description: The unique identifier for the user.
+         *                   example: random-user-id
+         *                 email:
+         *                   type: string
+         *                   format: email
+         *                   description: The email address of the user.
+         *                   example: user@example.com
+         *       401:
+         *         description: Unauthorized, invalid or missing token.
+         *         content:
+         *           application/json:
+         *             schema:
+         *               type: object
+         *               properties:
+         *                 status_code:
+         *                   type: integer
+         *                   description: HTTP status code indicating error.
+         *                   example: 401
+         *                 error:
+         *                   type: string
+         *                   description: Error code.
+         *                   example: invalid-token
+         *                 error_description:
+         *                   type: string
+         *                   description: Detailed description of the error.
+         *                   example: Authorization token is invalid or expired.
+         *       404:
+         *         description: User not found.
+         *         content:
+         *           application/json:
+         *             schema:
+         *               type: object
+         *               properties:
+         *                 status_code:
+         *                   type: integer
+         *                   description: HTTP status code indicating error.
+         *                   example: 404
+         *                 error:
+         *                   type: string
+         *                   description: Error code.
+         *                   example: resource-not-found
+         *                 error_description:
+         *                   type: string
+         *                   description: Detailed description of the error.
+         *                   example: User not found.
+         *       500:
+         *         description: Internal server error.
+         *         content:
+         *           application/json:
+         *             schema:
+         *               type: object
+         *               properties:
+         *                 status_code:
+         *                   type: integer
+         *                   description: HTTP status code indicating error.
+         *                   example: 500
+         *                 error:
+         *                   type: string
+         *                   description: Error code.
+         *                   example: internal-server-error
+         *                 error_description:
+         *                   type: string
+         *                   description: Detailed description of the error.
+         *                   example: An unexpected error occurred.
+         */
+        this.router.get(
+            '/userinfo',
+            AuthorizationMiddleware(
+                new AuthService(userRepository, refreshTokenRepository)
+            ),
+            (async (req: Request, res: Response, next: NextFunction) => {
+                await this.authController.getUserInfo(req, res, next);
+            }) as RequestHandler
+        );
     }
 }
