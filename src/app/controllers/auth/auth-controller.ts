@@ -25,8 +25,11 @@ export class AuthController {
                 payload.email,
                 payload.password
             );
-            const accessToken = await this.generateAccessToken({
+            const accessToken = await this.authService.generateAccessToken({
                 email: user.email,
+                id: user.id
+            });
+            const refreshToken = await this.authService.generateRefreshToken({
                 id: user.id
             });
             res.status(201).send(
@@ -36,7 +39,8 @@ export class AuthController {
                         id: user.id
                     },
                     access_token: accessToken,
-                    token_type: 'bearer'
+                    token_type: 'bearer',
+                    refresh_token: refreshToken
                 })
             );
         } catch (e) {
@@ -63,11 +67,39 @@ export class AuthController {
                             payload.email,
                             payload.password
                         );
-                        res.status(201).send(
+                        res.status(200).send(
                             new ApiResponse(200, {
                                 userinfo: result.userinfo,
                                 access_token: result.access_token,
-                                token_type: 'bearer'
+                                expires_in: 3600,
+                                token_type: 'bearer',
+                                refresh_token: result.refresh_token
+                            })
+                        );
+                    }
+                    break;
+                case GrantTypes.RefreshToken:
+                    {
+                        const refreshUserInfo =
+                            await this.authService.verifyTokenAndGetPayload(
+                                payload.refresh_token,
+                                process.env.REFRESH_TOKEN_SECRET
+                            );
+
+                        const userinfo = await this.authService.getUserInfo(
+                            refreshUserInfo.id
+                        );
+
+                        const nextAccessToken =
+                            await this.authService.generateAccessToken({
+                                id: userinfo.id,
+                                email: userinfo.email
+                            });
+                        res.status(200).send(
+                            new ApiResponse(200, {
+                                access_token: nextAccessToken,
+                                token_type: 'bearer',
+                                expires_in: 3600
                             })
                         );
                     }
@@ -89,42 +121,9 @@ export class AuthController {
                 return;
             }
             next(
-                new UnhandledException(
-                    e,
-                    new ExceptionDetails('auth-registration-failed')
-                )
+                new UnhandledException(e, new ExceptionDetails('auth-failed'))
             );
         }
-    }
-
-    public async generateAccessToken(
-        userinfo: Pick<User, 'email' | 'id'>
-    ): Promise<string> {
-        return await new Promise<string>((resolve, reject) => {
-            sign(
-                {
-                    userinfo: {
-                        ...userinfo
-                    }
-                },
-                randomBytes(32),
-                {
-                    algorithm: 'none',
-                    expiresIn: '1h',
-                    issuer: `http://${process.env.APP_DOMAIN}:${process.env.APP_PORT}/auth`,
-                    jwtid: v4(),
-                    subject: userinfo.id
-                },
-                (error, encoded) => {
-                    if (error) {
-                        reject(error);
-                        return;
-                    }
-
-                    resolve(encoded);
-                }
-            );
-        });
     }
 
     private async handlePasswordGrant(email: string, password: string) {
@@ -132,8 +131,11 @@ export class AuthController {
             email,
             password
         );
-        const accessToken = await this.generateAccessToken({
+        const accessToken = await this.authService.generateAccessToken({
             email: user.email,
+            id: user.id
+        });
+        const refreshToken = await this.authService.generateRefreshToken({
             id: user.id
         });
         return {
@@ -141,7 +143,8 @@ export class AuthController {
                 email: user.email,
                 id: user.id
             },
-            access_token: accessToken
+            access_token: accessToken,
+            refresh_token: refreshToken
         };
     }
 }

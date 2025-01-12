@@ -1,7 +1,6 @@
-import { v4 } from 'uuid';
+import { Repository } from 'typeorm';
 import getDataSource from '../../config/db-config';
 import { User } from '../entities/User';
-import { Repository } from 'typeorm';
 
 export interface UserRepository {
     saveUser: (
@@ -21,13 +20,15 @@ export const userRepository = getDataSource()
         ): Promise<User> {
             return await this.save(
                 this.create({
-                    id: v4(),
                     email: userInfo.email,
                     password: userInfo.password
                 })
             );
         },
-        async findOneByEmail(this: Repository<User>, email: string): Promise<User> {
+        async findOneByEmail(
+            this: Repository<User>,
+            email: string
+        ): Promise<User> {
             return await this.findOneBy({
                 email
             });

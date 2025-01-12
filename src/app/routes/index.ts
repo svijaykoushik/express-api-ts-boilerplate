@@ -7,9 +7,14 @@ import { RootRouter } from './root-router';
 import { AuthRouter } from './auth';
 import { AuthService } from '../services/auth/auth-service';
 import { userRepository } from '../models/repositories/UserRepository';
+import { refreshTokenRepository } from '../models/repositories/RefreshTokenRepository';
 
 export const route = new RootRouter(
-    new AuthRouter(new AuthController(new AuthService(userRepository))),
+    new AuthRouter(
+        new AuthController(
+            new AuthService(userRepository, refreshTokenRepository)
+        )
+    ),
     new SampleRouter(new SampleController()),
     new AppRouter(new AppController(new AppService()))
 );
