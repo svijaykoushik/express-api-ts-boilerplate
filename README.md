@@ -96,10 +96,24 @@ Explore the organized file structure designed to streamline your development wor
 ## 🧪 Development Tools
 
 - **Mocha**: Powerful testing framework. [Learn More](https://mochajs.org/)
-- **Chai**: Assertion library for comprehensive testing. [Learn More](https://www.chaijs.com/)
-- **TS-Node**: Run TypeScript code directly without compilation. [Learn More](https://github.com/TypeStrong/ts-node)
+- **Chai**: Assertion library for comprehensive testing. Includes **chai-as-promised** for handling and asserting promises. [Learn More](https://www.chaijs.com/)
+- **Sinon**: For mocking and stubbing in test suites. [Learn More](https://sinonjs.org/)
+- **TypeScript Execute (tsx)**: Run TypeScript code directly without compilation. [Learn More](https://tsx.is)
 - **Nodemon**: Automatically restarts the server on file changes to streamline development. [Learn More](https://nodemon.io/)
 - **Docker**: Build and test applications in a production-like environment. [Learn More](https://www.docker.com)
+
+## 🔑 Authentication and Authorization
+
+This boilerplate includes built-in authentication support compliant with OAuth 2.0 standards. The supported flows are:
+
+1. **Resource Owner Password Grant**: Sign in using a username and password.
+2. **Refresh Token Grant**: Refresh access tokens for continued access without re-authentication.
+
+Additionally, the following endpoints are provided:
+
+- **Registration**: Create a new user account.
+- **Logout**: End the user session.
+- **Userinfo**: Retrieve information about the authenticated user.
 
 ## 🤝 Join Us
 
