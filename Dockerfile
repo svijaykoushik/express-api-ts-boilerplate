@@ -46,6 +46,22 @@ COPY . .
 RUN npm run build
 
 ################################################################################
+# Create a stage for installing production dependecies.
+FROM base as test
+
+# Download the dependencies
+RUN --mount=type=bind,source=package.json,target=package.json \
+    --mount=type=bind,source=package-lock.json,target=package-lock.json \
+    --mount=type=cache,target=/root/.npm \
+    npm ci --include=dev
+
+# Copy the rest of the source files into the image.
+COPY . .
+
+# Run the test script
+RUN npm test
+
+################################################################################
 # Create a new stage to run the application with minimal runtime dependencies
 # where the necessary files are copied from the build stage.
 FROM base AS final
