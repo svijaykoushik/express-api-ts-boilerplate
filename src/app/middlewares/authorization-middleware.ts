@@ -1,9 +1,13 @@
 import { NextFunction, Request, RequestHandler, Response } from 'express';
+import { Scope } from '../../types/scope';
 import { ApiException, ExceptionDetails } from '../error/api-exception';
-import { AuthService } from '../services/auth/auth-service';
 import { UnhandledException } from '../error/unhandled-exception';
+import { AuthService } from '../services/auth/auth-service';
 
-export function AuthorizationMiddleware(authService: AuthService) {
+export function AuthorizationMiddleware(
+    authService: AuthService,
+    requiredScopes?: Scope[]
+) {
     return (async (req: Request, res: Response, next: NextFunction) => {
         const accessToken = req.headers.authorization?.split(' ')?.[1];
         if (!accessToken) {
@@ -19,10 +23,11 @@ export function AuthorizationMiddleware(authService: AuthService) {
             return;
         }
         try {
-            const userinfo = await authService.verifyTokenAndGetPayload(
-                accessToken,
-                process.env.ACCESS_TOKEN_SECRET
-            );
+            const { scope, userinfo } =
+                await authService.verifyTokenAndGetPayload(
+                    accessToken,
+                    process.env.ACCESS_TOKEN_SECRET
+                );
 
             if (!userinfo) {
                 return next(
@@ -31,6 +36,23 @@ export function AuthorizationMiddleware(authService: AuthService) {
                         new ExceptionDetails(
                             'invalid_grant',
                             'Invalid or expired token.'
+                        )
+                    )
+                );
+            }
+
+            if (
+                requiredScopes?.length &&
+                scope
+                    .split(' ')
+                    .every((s) => requiredScopes.includes(s as Scope))
+            ) {
+                return next(
+                    new ApiException(
+                        403,
+                        new ExceptionDetails(
+                            'invalid_scope',
+                            'Invalid scope. Access denied.'
                         )
                     )
                 );

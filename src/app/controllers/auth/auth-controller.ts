@@ -1,16 +1,13 @@
-import { NextFunction, Request, Response } from 'express';
-import { AuthService } from '../../services/auth/auth-service';
 import { plainToInstance } from 'class-transformer';
-import { RegisterDTO, TokenDTO } from '../../dtos';
-import { UnhandledException } from '../../error/unhandled-exception';
-import { ApiException, ExceptionDetails } from '../../error/api-exception';
-import { User } from '../../models/entities/User';
-import { sign } from 'jsonwebtoken';
-import { v4 } from 'uuid';
-import { ApiResponse } from '../../helpers/api-response';
-import { randomBytes } from 'crypto';
-import { GrantTypes } from '../../enums';
+import { NextFunction, Request, Response } from 'express';
+import { Scope } from '../../../types/scope';
 import { UserInfo } from '../../../types/userinfo';
+import { RegisterDTO, TokenDTO } from '../../dtos';
+import { GrantTypes } from '../../enums';
+import { ApiException, ExceptionDetails } from '../../error/api-exception';
+import { UnhandledException } from '../../error/unhandled-exception';
+import { ApiResponse } from '../../helpers/api-response';
+import { AuthService } from '../../services/auth/auth-service';
 
 export class AuthController {
     public constructor(private authService: AuthService) {}
@@ -26,10 +23,13 @@ export class AuthController {
                 payload.email,
                 payload.password
             );
-            const accessToken = await this.authService.generateAccessToken({
-                email: user.email,
-                id: user.id
-            });
+            const accessToken = await this.authService.generateAccessToken(
+                {
+                    email: user.email,
+                    id: user.id
+                },
+                [Scope.PROFILE, Scope.WRITE, Scope.READ]
+            );
             const refreshToken = await this.authService.generateRefreshToken({
                 id: user.id
             });
@@ -88,14 +88,17 @@ export class AuthController {
                             );
 
                         const userinfo = await this.authService.getUserInfo(
-                            refreshUserInfo.id
+                            refreshUserInfo.userinfo.id
                         );
 
                         const nextAccessToken =
-                            await this.authService.generateAccessToken({
-                                id: userinfo.id,
-                                email: userinfo.email
-                            });
+                            await this.authService.generateAccessToken(
+                                {
+                                    id: userinfo.id,
+                                    email: userinfo.email
+                                },
+                                [Scope.PROFILE, Scope.WRITE, Scope.READ]
+                            );
                         res.status(200).send(
                             new ApiResponse(200, {
                                 access_token: nextAccessToken,
@@ -148,10 +151,13 @@ export class AuthController {
             email,
             password
         );
-        const accessToken = await this.authService.generateAccessToken({
-            email: user.email,
-            id: user.id
-        });
+        const accessToken = await this.authService.generateAccessToken(
+            {
+                email: user.email,
+                id: user.id
+            },
+            [Scope.PROFILE, Scope.WRITE, Scope.READ]
+        );
         const refreshToken = await this.authService.generateRefreshToken({
             id: user.id
         });

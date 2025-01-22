@@ -165,7 +165,10 @@ describe('AuthService', () => {
 
     describe('verifyTokenAndGetPayload', () => {
         it('should return decoded payload if token is valid', async () => {
-            const payload = { userinfo: { id: '123', email: 'test@test.com' } };
+            const payload = {
+                scope: 'read write profile',
+                userinfo: { id: '123', email: 'test@test.com' }
+            };
             sinon.stub(jwt, 'verify').yields(null, payload);
 
             const result = await authService.verifyTokenAndGetPayload(
@@ -173,7 +176,7 @@ describe('AuthService', () => {
                 'secret'
             );
 
-            expect(result).to.deep.equal(payload.userinfo);
+            expect(result).to.deep.equal(payload);
         });
 
         it('should throw an ApiException if token is expired', async () => {
@@ -182,8 +185,7 @@ describe('AuthService', () => {
 
             await expect(
                 authService.verifyTokenAndGetPayload('token', 'secret')
-            )
-                .to.be.rejectedWith(ApiException);
+            ).to.be.rejectedWith(ApiException);
         });
     });
 

@@ -1,8 +1,5 @@
-import { Repository } from 'typeorm';
-import { User } from '../../models/entities/User';
-import { UserRepository } from '../../models/repositories/UserRepository';
 import { compare, hash } from 'bcrypt';
-import { ApiException, ExceptionDetails } from '../../error/api-exception';
+import { isEmail } from 'class-validator';
 import {
     JsonWebTokenError,
     JwtPayload,
@@ -11,11 +8,16 @@ import {
     verify,
     VerifyErrors
 } from 'jsonwebtoken';
+import { Repository } from 'typeorm';
 import { v4 } from 'uuid';
+import { AccessTokenPayload } from '../../../types/access-token-payload';
+import { Scope } from '../../../types/scope';
 import { UserInfo } from '../../../types/userinfo';
+import { ApiException, ExceptionDetails } from '../../error/api-exception';
 import { RefreshToken } from '../../models/entities/RefreshToken';
+import { User } from '../../models/entities/User';
 import { RefreshTokenRepository } from '../../models/repositories/RefreshTokenRepository';
-import { isEmail } from 'class-validator';
+import { UserRepository } from '../../models/repositories/UserRepository';
 
 export class AuthService {
     public constructor(
@@ -66,11 +68,15 @@ export class AuthService {
     }
 
     public async generateAccessToken(
-        userinfo: Pick<User, 'email' | 'id'>
+        userinfo: Pick<User, 'email' | 'id'>,
+        scopes?: Scope[]
     ): Promise<string> {
         return await new Promise<string>((resolve, reject) => {
             sign(
                 {
+                    scope:
+                        scopes?.join(' ') ||
+                        `${Scope.READ} ${Scope.WRITE} ${Scope.PROFILE}`,
                     userinfo: {
                         ...userinfo
                     }
@@ -130,7 +136,7 @@ export class AuthService {
     }
 
     public async verifyTokenAndGetPayload(token: string, secret: string) {
-        return await new Promise<UserInfo>((resolve, reject) => {
+        return await new Promise<AccessTokenPayload>((resolve, reject) => {
             verify(
                 token,
                 secret,
@@ -168,7 +174,10 @@ export class AuthService {
                         reject(error);
                         return;
                     }
-                    resolve(decoded.userinfo as UserInfo);
+                    resolve({
+                        scope: decoded.scope,
+                        userinfo: decoded.userinfo as UserInfo
+                    });
                 }
             );
         });

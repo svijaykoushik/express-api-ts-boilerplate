@@ -1,11 +1,11 @@
 import * as chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
-import { AuthController } from './auth-controller';
+import { GrantTypes } from '../../enums';
 import { ApiException, ExceptionDetails } from '../../error/api-exception';
 import { UnhandledException } from '../../error/unhandled-exception';
 import { ApiResponse } from '../../helpers/api-response';
-import { GrantTypes } from '../../enums';
+import { AuthController } from './auth-controller';
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
@@ -133,10 +133,14 @@ describe('AuthController', () => {
                 grant_type: GrantTypes.RefreshToken,
                 refresh_token: 'refresh-token'
             };
+            const scope = 'read write profile';
             const userinfo = { id: '123', email: 'test@test.com' };
             const nextAccessToken = 'new-access-token';
 
-            authServiceStub.verifyTokenAndGetPayload.resolves(userinfo);
+            authServiceStub.verifyTokenAndGetPayload.resolves({
+                scope,
+                userinfo
+            });
             authServiceStub.getUserInfo.resolves(userinfo);
             authServiceStub.generateAccessToken.resolves(nextAccessToken);
 

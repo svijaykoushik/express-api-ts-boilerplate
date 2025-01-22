@@ -1,19 +1,20 @@
 import {
-    Router,
-    Request,
-    Response,
     NextFunction,
-    RequestHandler
+    Request,
+    RequestHandler,
+    Response,
+    Router
 } from 'express';
-import { ApiRouter } from '../../helpers/api-router';
-import { ApiResponse } from '../../helpers/api-response';
-import { RegisterDTO, TokenDTO } from '../../dtos';
-import { BodyValidationMiddleware } from '../../middlewares';
+import { Scope } from '../../../types/scope';
 import { AuthController } from '../../controllers';
+import { RegisterDTO, TokenDTO } from '../../dtos';
+import { ApiResponse } from '../../helpers/api-response';
+import { ApiRouter } from '../../helpers/api-router';
+import { BodyValidationMiddleware } from '../../middlewares';
 import { AuthorizationMiddleware } from '../../middlewares/authorization-middleware';
-import { AuthService } from '../../services/auth/auth-service';
-import { userRepository } from '../../models/repositories/UserRepository';
 import { refreshTokenRepository } from '../../models/repositories/RefreshTokenRepository';
+import { userRepository } from '../../models/repositories/UserRepository';
+import { AuthService } from '../../services/auth/auth-service';
 
 export class AuthRouter implements ApiRouter {
     public readonly baseUrl = '/auth';
@@ -359,7 +360,8 @@ export class AuthRouter implements ApiRouter {
         this.router.get(
             '/userinfo',
             AuthorizationMiddleware(
-                new AuthService(userRepository, refreshTokenRepository)
+                new AuthService(userRepository, refreshTokenRepository),
+                [Scope.PROFILE]
             ),
             (async (req: Request, res: Response, next: NextFunction) => {
                 await this.authController.getUserInfo(req, res, next);
