@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/unbound-method */
 import { Router } from 'express';
 import { SampleController } from 'src/app/controllers/sample/sample-contoller';
-import { ApiRouter } from './api-router';
+import { ApiRouter } from '../helpers/api-router';
 
 export class SampleRouter implements ApiRouter {
+    public readonly baseUrl = '/sample';
     private router: Router;
     public constructor(private sampleController: SampleController) {
         this.router = Router();
@@ -27,7 +28,7 @@ export class SampleRouter implements ApiRouter {
          *       200:
          *         description: Application works
          */
-        this.router.get('/sample', this.sampleController.getSample);
+        this.router.get('/', this.sampleController.getSample);
 
         /**
          * @openapi
@@ -41,6 +42,6 @@ export class SampleRouter implements ApiRouter {
          *       500:
          *         description: Internal server error
          */
-        this.router.get('/sample/error', this.sampleController.getError);
+        this.router.get('/error', this.sampleController.getError);
     }
 }

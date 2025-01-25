@@ -7,11 +7,11 @@ import {
     RequestHandler
 } from 'express';
 import { AppController } from 'src/app/controllers/app-contoller';
-import { ApiRouter } from './api-router';
+import { ApiRouter } from '../helpers/api-router';
 
 export class AppRouter implements ApiRouter {
+    public readonly baseUrl = '/api/v1/app';
     private router: Router;
-    private baseUrl = '/api/v1/app';
     public constructor(private appController: AppController) {
         this.router = Router();
         this.initRoutes();
@@ -34,7 +34,7 @@ export class AppRouter implements ApiRouter {
          *       200:
          *         description: Application works
          */
-        this.router.get(`${this.baseUrl}/sample`, (async (
+        this.router.get('/sample', (async (
             req: Request,
             res: Response,
             next: NextFunction

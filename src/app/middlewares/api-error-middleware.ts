@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { ApiException } from '../error/api-exception';
+import { ApiResponse } from '../helpers/api-response';
 
 export function apiErrorHandler(
     error: ApiException,
@@ -8,8 +9,15 @@ export function apiErrorHandler(
     next: NextFunction
 ): void {
     console.error(error);
-    response.status(error.httpCode).send({
-        errorMessage: error.message,
-        data: error.details
-    });
+    const data: Record<string, any> = {};
+    for (const [key, val] of Object.entries(error.details)) {
+        data[key] = val;
+    }
+    response.status(error.httpCode).send(
+        new ApiResponse(
+            error.httpCode,
+            data,
+            error.message
+        )
+    );
 }

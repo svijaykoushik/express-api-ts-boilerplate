@@ -1,13 +1,17 @@
 import { ApiException, ExceptionDetails } from './api-exception';
 
 export class DomainRestrictedException extends ApiException {
-    constructor(domain) {
+    constructor(domain: string) {
         super(
             403,
-            'Domain Blocked by CORS policy',
-            new ExceptionDetails('DOMAIN_BLOCKED', {
-                domain
-            })
+            new ExceptionDetails(
+                'domain_blocked',
+                'Domain Blocked by CORS policy',
+                null,
+                {
+                    domain
+                }
+            )
         );
     }
 }

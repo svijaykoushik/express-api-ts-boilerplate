@@ -1,11 +1,11 @@
 {
   "name": "express-api-ts-boilerplate",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Simple boiler plate for rest-api with express written in typescript",
   "main": "build/index.js",
   "scripts": {
     "pretty": "prettier -w src",
-    "test": "mocha -r ts-node/register src/**/**/*.spec.ts",
+    "test": "mocha -r tsx src/**/**/*.spec.ts",
     "dev": "nodemon",
     "start": "node ./build/index.js",
     "prebuild": "rm -rf ./build",
@@ -45,11 +45,13 @@
     "reflect-metadata": "^0.2.1",
     "sqlite3": "^5.1.7",
     "swagger-jsdoc": "^6.2.8",
-    "typeorm": "^0.3.19"
+    "typeorm": "^0.3.19",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/chai": "^4.3.11",
+    "@types/chai-as-promised": "^8.0.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
     "@types/helmet": "0.0.48",
@@ -57,15 +59,18 @@
     "@types/jwk-to-pem": "^2.0.3",
     "@types/mocha": "^10.0.6",
     "@types/node": "^20.10.6",
+    "@types/sinon": "^17.0.3",
     "@types/swagger-jsdoc": "^6.0.4",
     "@typescript-eslint/eslint-plugin": "^6.17.0",
     "@typescript-eslint/parser": "^6.17.0",
     "chai": "^5.0.0",
+    "chai-as-promised": "^8.0.1",
     "eslint": "^8.56.0",
     "mocha": "^10.2.0",
     "nodemon": "^3.1.0",
     "prettier": "^3.2.5",
-    "ts-node": "^10.9.2",
+    "sinon": "^19.0.2",
+    "tsx": "^4.19.2",
     "typescript": "^5.3.3"
   }
 }

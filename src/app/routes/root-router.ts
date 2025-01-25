@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { ApiRouter } from './api-router';
+import { ApiRouter } from '../helpers/api-router';
 
 export class RootRouter implements ApiRouter {
-    private router: Router;
+    public readonly baseUrl = '/';
+    private readonly router: Router;
 
-    public constructor() {
+    public constructor(...subRoutes: ApiRouter[]) {
         this.router = Router();
 
         /**
@@ -12,18 +13,22 @@ export class RootRouter implements ApiRouter {
          * /:
          *   get:
          *     summary: The entry point of the application
-         *     description: The entry poin of the application
+         *     description: The entry point of the application
          *     tags:
          *       - Entry Point
          *     responses:
          *       200:
          *         description: Ok
          */
-        this.router.get('/', (request, response) => {
+        this.router.get(this.baseUrl, (request, response) => {
             response.status(200).send({
                 message: 'Welcome'
             });
         });
+
+        for(const subRoute of subRoutes){
+            this.router.use(subRoute.baseUrl, subRoute.Router);
+        }
     }
 
     public get Router(): Router {

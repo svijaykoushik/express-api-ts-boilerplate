@@ -3,7 +3,6 @@ import helmet from 'helmet';
 // import cors from 'cors';
 import { AddressInfo } from 'net';
 import { Server } from 'http';
-import { routes } from './routes';
 import {
     routeErrorHandler,
     unhandledErrorHandler,
@@ -12,6 +11,7 @@ import {
 import { join } from 'path';
 import swaggerJsdoc from 'swagger-jsdoc';
 import { apiDefintion } from './config/swagger-config';
+import { route } from './routes';
 // import { DomainRestrictedException } from './error/domain-restricted-exception';
 
 export class App {
@@ -61,6 +61,7 @@ export class App {
         //     })
         // );
         this.app.use(express.json({ limit: '50mb' }));
+        this.app.use(express.urlencoded({ extended: true }));
 
         const apiDocsPath = join(__dirname, '../api-docs');
         this.app.use('/api-docs', express.static(apiDocsPath));
@@ -69,9 +70,14 @@ export class App {
                 response.setHeader('Content-Type', 'application/json');
                 const swaggerSpec = swaggerJsdoc({
                     swaggerDefinition: {
-                        ...apiDefintion
+                        ...apiDefintion,
+                        servers: [
+                            {
+                                url: `http://${process.env.SWAGGER_DOMAIN}:${process.env.SWAGGER_PORT}`
+                            }
+                        ]
                     },
-                    apis: [join(__dirname,'./routes/**/*.{js,ts}')]
+                    apis: [join(__dirname, './routes/**/*.{js,ts}')]
                 });
                 response.send(swaggerSpec);
             } catch (e) {
@@ -81,9 +87,7 @@ export class App {
     }
 
     private initRoutes() {
-        routes.forEach((route) => {
-            this.app.use(route.Router);
-        });
+        this.app.use(route.Router);
         this.app.use(routeErrorHandler);
     }
 
