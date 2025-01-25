@@ -45,7 +45,7 @@ export function AuthorizationMiddleware(
                 requiredScopes?.length &&
                 scope
                     .split(' ')
-                    .every((s) => requiredScopes.includes(s as Scope))
+                    .every((s) => requiredScopes.includes(s as Scope)) === false
             ) {
                 return next(
                     new ApiException(
