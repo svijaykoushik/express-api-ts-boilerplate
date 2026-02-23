@@ -1,6 +1,6 @@
 {
   "name": "express-api-ts-boilerplate",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Simple boiler plate for rest-api with express written in typescript",
   "main": "build/index.js",
   "scripts": {
@@ -61,16 +61,22 @@
     "@types/node": "^25.0.3",
     "@types/sinon": "^21.0.0",
     "@types/swagger-jsdoc": "^6.0.4",
-    "@typescript-eslint/eslint-plugin": "^8.50.1",
-    "@typescript-eslint/parser": "^8.50.1",
+    "@typescript-eslint/eslint-plugin": "^8.56.0",
+    "@typescript-eslint/parser": "^8.56.0",
     "chai": "^6.2.2",
     "chai-as-promised": "^8.0.2",
-    "eslint": "^9.39.2",
+    "eslint": "^10.0.1",
     "mocha": "^11.7.5",
-    "nodemon": "^3.1.11",
+    "nodemon": "^3.1.14",
     "prettier": "^3.7.4",
     "sinon": "^21.0.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "minimatch": "^10.2.1",
+    "glob": "^11.0.0",
+    "tar": "^7.5.8",
+    "diff": "^7.0.0"
   }
 }
