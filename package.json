@@ -43,9 +43,9 @@
     "jsonwebtoken": "^9.0.3",
     "jwk-to-pem": "^2.0.7",
     "reflect-metadata": "^0.2.2",
-    "sqlite3": "^5.1.7",
+    "sqlite3": "^6.0.1",
     "swagger-jsdoc": "^6.2.8",
-    "typeorm": "^0.3.28",
+    "typeorm": "^1.0.0",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
