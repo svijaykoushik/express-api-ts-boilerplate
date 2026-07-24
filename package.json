@@ -45,7 +45,7 @@
     "reflect-metadata": "^0.2.2",
     "sqlite3": "^5.1.7",
     "swagger-jsdoc": "^6.2.8",
-    "typeorm": "^0.3.29",
+    "typeorm": "^0.3.31",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
