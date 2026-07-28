@@ -33,7 +33,7 @@
   "homepage": "https://github.com/svijaykoushik/express-api-ts-boilerplate#readme",
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "body-parser": "^2.2.1",
+    "body-parser": "^2.3.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.3",
     "cors": "^2.8.5",
