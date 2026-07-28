@@ -1,81 +1,81 @@
 {
-  "name": "express-api-ts-boilerplate",
-  "version": "0.2.5",
-  "description": "Simple boiler plate for rest-api with express written in typescript",
-  "main": "build/index.js",
-  "scripts": {
-    "pretty": "prettier -w src",
-    "test": "mocha -r tsx src/**/**/*.spec.ts",
-    "dev": "nodemon",
-    "start": "node ./build/index.js",
-    "prebuild": "rm -rf ./build",
-    "build": "tsc --build",
-    "postbuild": "cp -r src/api-docs build/api-docs",
-    "migration:start": "node ./build/app/scripts/migrate.js",
-    "migration:revert": "node ./build/app/scripts/revert-migration.js",
-    "migration:revertAll": "node ./build/app/scripts/revert-all-migrations.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/svijaykoushik/express-api-ts-boilerplate.git"
-  },
-  "keywords": [
-    "express.js",
-    "boiler-plate",
-    "typescript",
-    "rest-api"
-  ],
-  "author": "Vijaykoushik, S.",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/svijaykoushik/express-api-ts-boilerplate/issues"
-  },
-  "homepage": "https://github.com/svijaykoushik/express-api-ts-boilerplate#readme",
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "body-parser": "^2.3.0",
-    "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.3",
-    "cors": "^2.8.5",
-    "dotenv": "^17.2.3",
-    "express": "^5.2.1",
-    "helmet": "^8.1.0",
-    "jsonwebtoken": "^9.0.3",
-    "jwk-to-pem": "^2.0.7",
-    "reflect-metadata": "^0.2.2",
-    "sqlite3": "^6.0.1",
-    "swagger-jsdoc": "^6.2.8",
-    "typeorm": "^0.3.31",
-    "uuid": "^13.0.0"
-  },
-  "devDependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/chai": "^5.2.3",
-    "@types/chai-as-promised": "^8.0.2",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/jwk-to-pem": "^2.0.3",
-    "@types/mocha": "^10.0.10",
-    "@types/node": "^25.0.3",
-    "@types/sinon": "^21.0.0",
-    "@types/swagger-jsdoc": "^6.0.4",
-    "@typescript-eslint/eslint-plugin": "^8.56.0",
-    "@typescript-eslint/parser": "^8.56.0",
-    "chai": "^6.2.2",
-    "chai-as-promised": "^8.0.2",
-    "eslint": "^10.0.1",
-    "mocha": "^11.7.5",
-    "nodemon": "^3.1.14",
-    "prettier": "^3.7.4",
-    "sinon": "^21.0.1",
-    "tsx": "^4.23.0",
-    "typescript": "^5.9.3"
-  },
-  "overrides": {
-    "minimatch": "^10.2.1",
-    "glob": "^11.0.0",
-    "tar": "^7.5.8",
-    "diff": "^7.0.0"
-  }
+    "name": "express-api-ts-boilerplate",
+    "version": "0.2.5",
+    "description": "Simple boiler plate for rest-api with express written in typescript",
+    "main": "build/index.js",
+    "scripts": {
+        "pretty": "prettier -w src",
+        "test": "mocha -r tsx \"src/**/*.spec.ts\"",
+        "dev": "nodemon",
+        "start": "node ./build/index.js",
+        "prebuild": "rm -rf ./build",
+        "build": "tsc --build",
+        "postbuild": "cp -r src/api-docs build/api-docs",
+        "migration:start": "node ./build/app/scripts/migrate.js",
+        "migration:revert": "node ./build/app/scripts/revert-migration.js",
+        "migration:revertAll": "node ./build/app/scripts/revert-all-migrations.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/svijaykoushik/express-api-ts-boilerplate.git"
+    },
+    "keywords": [
+        "express.js",
+        "boiler-plate",
+        "typescript",
+        "rest-api"
+    ],
+    "author": "Vijaykoushik, S.",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/svijaykoushik/express-api-ts-boilerplate/issues"
+    },
+    "homepage": "https://github.com/svijaykoushik/express-api-ts-boilerplate#readme",
+    "dependencies": {
+        "bcrypt": "^6.0.0",
+        "body-parser": "^2.3.0",
+        "class-transformer": "^0.5.1",
+        "class-validator": "^0.14.3",
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.3",
+        "express": "^5.2.1",
+        "helmet": "^8.1.0",
+        "jsonwebtoken": "^9.0.3",
+        "jwk-to-pem": "^2.0.7",
+        "reflect-metadata": "^0.2.2",
+        "sqlite3": "^6.0.1",
+        "swagger-jsdoc": "^6.2.8",
+        "typeorm": "^0.3.31",
+        "uuid": "^13.0.0"
+    },
+    "devDependencies": {
+        "@types/bcrypt": "^6.0.0",
+        "@types/chai": "^5.2.3",
+        "@types/chai-as-promised": "^8.0.2",
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.6",
+        "@types/jsonwebtoken": "^9.0.10",
+        "@types/jwk-to-pem": "^2.0.3",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "^25.0.3",
+        "@types/sinon": "^21.0.0",
+        "@types/swagger-jsdoc": "^6.0.4",
+        "@typescript-eslint/eslint-plugin": "^8.56.0",
+        "@typescript-eslint/parser": "^8.56.0",
+        "chai": "^6.2.2",
+        "chai-as-promised": "^8.0.2",
+        "eslint": "^10.0.1",
+        "mocha": "^11.7.5",
+        "nodemon": "^3.1.14",
+        "prettier": "^3.7.4",
+        "sinon": "^21.0.1",
+        "tsx": "^4.23.0",
+        "typescript": "^5.9.3"
+    },
+    "overrides": {
+        "minimatch": "^10.2.1",
+        "glob": "^11.0.0",
+        "tar": "^7.5.8",
+        "diff": "^7.0.0"
+    }
 }
