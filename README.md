@@ -6,7 +6,7 @@ Welcome to `express-api-ts-boilerplate` – a developer-friendly boilerplate tha
 
 - **Ready-to-use Architecture**: Begin your project with a thoughtfully organized structure.
 - **Secure by Design**: Strengthen your API with built-in middleware such as Helmet and CORS.
-- **Database Integration**: Use SQLite3 with TypeORM or easily swap it out for MySQL, PostgreSQL, or MongoDB as needed.
+- **Database Integration**: Use SQLite3 with TypeORM by default, or switch to MySQL/PostgreSQL via the `DB_TYPE` environment variable, with connection pooling configured out of the box.
 - **Validation Made Easy**: Utilize `class-validator` and `class-transformer` for streamlined data validation.
 - **API Documentation**: Effortlessly generate comprehensive API documentation using `swagger-jsdoc`.
 - **Enhanced Password Security**: Securely hash passwords with `bcrypt`.
@@ -30,6 +30,7 @@ Welcome to `express-api-ts-boilerplate` – a developer-friendly boilerplate tha
 
 3. **Configure the application**:
     - Create a `.env` file in the root directory for environment variables. Refer to the provided `.env.example` file.
+    - By default the app uses SQLite (`DB_TYPE=sqlite`). To use MySQL or PostgreSQL instead, set `DB_TYPE` to `mysql` or `postgres` and configure `DB_HOST`, `DB_PORT`, `DB_USERNAME`, `DB_PASSWORD`, and `TYPEORM_DATABASE`. Connection pool size can be tuned with `DB_POOL_MAX` (defaults to 10).
 
 4. **Run the application**:
     ```shell
@@ -77,7 +78,8 @@ Explore the organized file structure designed to streamline your development wor
         - `error/`: Custom error handling.
         - `models/`: Database schema and ORM models.
         - `middleware/`: Middleware for handling requests.
-        - `services/`: Business logic and reusable functions.
+        - `services/`: Business logic and reusable functions, including a `queue/` module for background job processing.
+        - `helpers/`: Shared utilities, including a `transaction.ts` helper for running work inside a database transaction.
         - `config/`: Configuration files for database, security, and environment variables.
         - `scripts/`: Standalone scripts and jobs.
 
@@ -120,6 +122,12 @@ Additionally, the following endpoints are provided:
 - **Registration**: Create a new user account.
 - **Logout**: End the user session (token revocation implementation tracked in [#75](https://github.com/svijaykoushik/express-api-ts-boilerplate/issues/75)).
 - **Userinfo**: Retrieve information about the authenticated user.
+
+## 🔄 Transactions and Background Jobs
+
+- **Transaction Helper**: `src/app/helpers/transaction.ts` exposes `runInTransaction`, which wraps a callback in a TypeORM `QueryRunner` transaction — committing on success and rolling back automatically on error.
+- **Background Job Queue**: `src/app/services/queue/` provides an `IQueueService` interface and an in-memory implementation (`InMemoryQueueService`) built on Node's `EventEmitter`, letting you `add()` jobs and register `process()` handlers that run off the request/response cycle. It's a drop-in interface, so it can be swapped for a real queue (e.g. BullMQ, SQS) without changing calling code.
+- **Demo**: `POST /sample/action` shows both together — it creates a record inside a transaction and queues a background "welcome email" job, returning `202 Accepted` immediately.
 
 ## 🤝 Join Us
 
