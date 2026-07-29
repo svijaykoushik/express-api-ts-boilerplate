@@ -104,7 +104,13 @@ Explore the organized file structure designed to streamline your development wor
 
 ## 🔑 Authentication and Authorization
 
-This boilerplate includes built-in authentication support compliant with OAuth 2.0 standards. The supported flows are:
+This boilerplate ships a **first-party-only** authentication model built on OAuth 2.0 token semantics (token endpoint shape, scopes, bearer tokens). It intentionally does **not** implement the parts of OAuth 2.0 that exist to protect users from *third-party* apps — there is no client registry, `/authorize` endpoint, consent screen, or PKCE support.
+
+This is a deliberate scoping decision, not a missing feature: this boilerplate is meant for setups where the web UI and this API are operated by the same party (e.g. `app.example.com` talking to `api.app.example.com`), so there's never a third party handling user credentials or consuming tokens on a user's behalf. Redirect-based Authorization Code / consent-screen flows add real complexity (client registration, an `/authorize` UI, redirect_uri validation, consent screens) for no benefit in that scenario, and go against this project's minimal, no-bloat goal.
+
+If you do need to support third-party client apps later, this is additive on top of the existing token endpoint/scope model rather than a rewrite — you'd add a client registry, an `/authorize` endpoint with login + consent, and PKCE support.
+
+The supported flows are:
 
 1. **Resource Owner Password Grant**: Sign in using a username and password.
 2. **Refresh Token Grant**: Refresh access tokens for continued access without re-authentication.
@@ -112,7 +118,7 @@ This boilerplate includes built-in authentication support compliant with OAuth 2
 Additionally, the following endpoints are provided:
 
 - **Registration**: Create a new user account.
-- **Logout**: End the user session.
+- **Logout**: End the user session (token revocation implementation tracked in [#75](https://github.com/svijaykoushik/express-api-ts-boilerplate/issues/75)).
 - **Userinfo**: Retrieve information about the authenticated user.
 
 ## 🤝 Join Us
